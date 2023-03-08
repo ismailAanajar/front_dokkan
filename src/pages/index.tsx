@@ -1,9 +1,37 @@
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
+import Carousel from '@dokkan/components/Carousel';
+import Banner from '@dokkan/components/Carousel/Slides/Banner';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const data = {
+  ComponentName:Banner,
+  slides: [
+    {
+      id:1,
+      title: 'LED 75 INCH F58',
+      subTitle: 'Get up to 50% Off Today',
+      img: require('@dokkan/assets/images/banner_slide1.jpg').default.src
+    },
+    {
+      id:2,
+      title: 'Smart Phones',
+      subTitle: '40% Off in All Products',
+      img: require('@dokkan/assets/images/banner_slide2.jpg').default.src
+
+    },
+  ],
+  options: {
+    className: 'banner_swiper',
+       slidesPerView:1,
+    navigation: true,
+    pagination:{ clickable: true },
+    scrollbar:{ draggable: true }
+  }
+}
   return (
     <>
       <Head>
@@ -13,7 +41,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className='text-primary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus sapiente alias error nobis nostrum earum assumenda quod vitae dolorum maxime amet ea, necessitatibus veniam dolorem libero quidem eius iste accusantium?</h1>
+        <Carousel data={data}/>
+        <h1 className='text-primary font-sans'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus sapiente alias error nobis nostrum earum assumenda quod vitae dolorum maxime amet ea, necessitatibus veniam dolorem libero quidem eius iste accusantium?</h1>
       </main>
     </>
   )

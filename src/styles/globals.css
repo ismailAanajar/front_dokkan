@@ -10,3 +10,8 @@
     /* ... */
   }
 }
+
+.banner_swiper .swiper-pagination-bullets {
+  position: absolute;
+  
+}
