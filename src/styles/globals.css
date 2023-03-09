@@ -11,7 +11,18 @@
   }
 }
 
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-primary text-white font-semibold  shadow-md  focus:outline-none focus:ring-2 focus:ring-opacity-75;
+  }
+}
+
 .banner_swiper .swiper-pagination-bullets {
   position: absolute;
   
+}
+.swiper.category_swiper {
+  overflow: initial;
+  width: 250px;
+  height: 168px;
 }

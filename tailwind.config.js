@@ -18,7 +18,7 @@ module.exports = {
       primary: 'var(--color-primary)',
       secondary: 'var(--color-secondary)',
       white: '#fff',
-      gray: '#ddd'
+      gray: '#777'
     },
     extend: {
       fontFamily: {

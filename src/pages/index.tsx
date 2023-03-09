@@ -3,6 +3,13 @@ import Head from 'next/head';
 
 import Carousel from '@dokkan/components/Carousel';
 import Banner from '@dokkan/components/Carousel/Slides/Banner';
+import Category from '@dokkan/components/Carousel/Slides/Category';
+
+// import { Scrollbar } from 'swiper';
+
+
+
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +36,48 @@ export default function Home() {
        slidesPerView:1,
     navigation: true,
     pagination:{ clickable: true },
-    scrollbar:{ draggable: true }
+    // scrollbar:{ draggable: true }
+  }
+}
+  const categories = {
+  ComponentName:Category,
+  slides: [
+    {
+      id:1,
+      img: require('@dokkan/assets/images/tablet.webp').default.src
+    },
+    {
+      id:2,
+      img: require('@dokkan/assets/images/laptop.webp').default.src
+
+    },
+    {
+      id:3,
+      img: require('@dokkan/assets/images/speaker.webp').default.src
+
+    },
+    {
+      id:4,
+      img: require('@dokkan/assets/images/tea_maker.webp').default.src
+
+    },
+    {
+      id:5,
+      img: require('@dokkan/assets/images/cycle.webp').default.src
+
+    },
+  ],
+  options: {
+        slidesPerView:4,
+        spaceBetween:30,
+         scrollbar:{
+          hide: false,
+          
+        },
+        isScrollbar: true
+    // scrollbar:{ draggable: true }
+      //  modules: [Scrollbar]
+
   }
 }
   return (
@@ -42,8 +90,15 @@ export default function Home() {
       </Head>
       <main>
         <Carousel data={data}/>
-        <h1 className='text-primary font-sans'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus sapiente alias error nobis nostrum earum assumenda quod vitae dolorum maxime amet ea, necessitatibus veniam dolorem libero quidem eius iste accusantium?</h1>
+        <div className='py-9'>
+          <div className="container">
+            <div>
+              <Carousel data={categories}/>
+            </div>
+          </div>
+        </div>
       </main>
+      
     </>
   )
 }

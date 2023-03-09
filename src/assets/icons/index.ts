@@ -8,7 +8,15 @@ type IconsMap = Record<
 >;
 
 const iconsMap = {
-  Truck: dynamic(() => import("./truck-fast.svg")),
+  User: dynamic(() => import("./user.svg")),
+  WhishList: dynamic(() => import("./whishlist.svg")),
+  Cart: dynamic(() => import("./cart.svg")),
+  OpenMenu: dynamic(() => import("./openMenu.svg")),
+  CloseMenu: dynamic(() => import("./closeMenu.svg")),
+  Facebook: dynamic(() => import("./facebook.svg")),
+  Instagram: dynamic(() => import("./instagram.svg")),
+  Twitter: dynamic(() => import("./twitter.svg")),
+  Youtube: dynamic(() => import("./youtube.svg")),
 };
 
 export type Icon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

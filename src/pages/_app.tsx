@@ -5,6 +5,7 @@ import { Space_Grotesk } from 'next/font/google';
 import { Provider } from 'react-redux';
 
 import { Header } from '@dokkan/components';
+import Footer from '@dokkan/components/Footer';
 
 import { store } from '../store';
 import themeConfig from '../theme';
@@ -26,8 +27,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <main className={`${inter.variable} font-sans`}>
-      <Header/>
-        <Component {...pageProps} />      
+        <Header/>
+        <Component {...pageProps} />   
+        <Footer/>   
       </main>
     </Provider>
   )
