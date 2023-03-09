@@ -2,8 +2,12 @@
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
-import { Pagination } from 'swiper';
+import {
+  Pagination,
+  Scrollbar,
+} from 'swiper';
 import {
   Swiper,
   SwiperSlide,
@@ -17,7 +21,7 @@ import {
 
 const Carousel = ({data}:any) => {
   const {ComponentName, slides, options} = data;
-  const {slidePerView, ...restCarouselOptions} = options;
+  const {isScrollbar, ...restCarouselOptions} = options;
   const child = slides.map((slide:any) => {
     return (
       <SwiperSlide key={slide.id}>
@@ -25,11 +29,15 @@ const Carousel = ({data}:any) => {
       </SwiperSlide>
     )
   })
+  // console.log(modules);
+  const modules = [Pagination, isScrollbar ? Scrollbar : undefined ].filter(i=>i)
+  
   return ( 
     <Swiper
-    {...options}
+    scrollbar= {false}
+    {...restCarouselOptions}
     
-    modules={[Pagination]}
+    modules={modules}
     >
       {child}
     </Swiper>
