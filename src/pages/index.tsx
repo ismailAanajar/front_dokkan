@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Carousel from '@dokkan/components/Carousel';
 import Banner from '@dokkan/components/Carousel/Slides/Banner';
 import Category from '@dokkan/components/Carousel/Slides/Category';
+import Offer from '@dokkan/components/Offer';
 
 // import { Scrollbar } from 'swiper';
 
@@ -68,17 +69,85 @@ export default function Home() {
     },
   ],
   options: {
-        slidesPerView:4,
+        slidesPerView:1,
         spaceBetween:30,
          scrollbar:{
           hide: false,
           
         },
-        isScrollbar: true
-    // scrollbar:{ draggable: true }
-      //  modules: [Scrollbar]
-
-  }
+        isScrollbar: true,
+        
+ breakpoints: {
+    // when window width is >= 320px
+    320: {
+      slidesPerView: 2,
+      spaceBetween: 20
+    },
+    // when window width is >= 480px
+    480: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    },
+    // when window width is >= 640px
+    640: {
+      slidesPerView: 4,
+      spaceBetween: 40
+    }
+  }  }
+}
+const HomeCms = {
+  area: 'promo',
+  content: [
+    {
+      id:1,
+      title: 'The wait is on: iphone 12 max pro',
+      image: require('@dokkan/assets/images/offer1.jpg').default.src,
+      subTitle: 'Last call for up to 32% off!',
+      url: '',
+      width: 100,
+      style: {
+        
+      }      
+    },
+    {
+      id: 2,
+      title: '',
+      image: require('@dokkan/assets/images/offer6.webp').default.src,
+      subTitle: '',
+      url: '#',
+      width: 33,
+      style: {
+        backgroundColor: '#333'
+      }      
+    },
+    {
+      id: 3,
+      title: 'title',
+      Image: '',
+      subTitle: '',
+      url: '',
+      width: 33,
+      style: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#333'
+      }      
+    },
+    {
+      id: 3,
+      // title: 'title',
+      image: require('@dokkan/assets/images/offer6.webp').default.src,
+      // subTitle: '',
+      url: '#',
+      width: 33,
+      style: {
+        color: '#fff',
+        textAlign: 'center',
+        // backgroundColor: '#333'
+      }      
+    },
+  ]
 }
   return (
     <>
@@ -90,11 +159,16 @@ export default function Home() {
       </Head>
       <main>
         <Carousel data={data}/>
-        <div className='py-9'>
+        <div className='categories py-9'>
           <div className="container">
-            <div>
-              <Carousel data={categories}/>
-            </div>
+            <Carousel data={categories}/>
+          </div>
+        </div>
+        <div className='blocks py-9'>
+          <div className='container flex flex-wrap gap-4 justify-between'>
+            {
+              HomeCms.content.map(item => <Offer key={item.id} {...item} />)
+            }
           </div>
         </div>
       </main>
