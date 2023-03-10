@@ -115,7 +115,7 @@ const Footer = () => {
               {
                 Object.keys(item.links).map((key:any) => {
                   
-                  return <Link className='block text' href   ={`${item.links[key]}`}>{key}</Link>
+                  return <Link className='block text text-gray' href   ={`${item.links[key]}`}>{key}</Link>
                 })
               }
             </div>
