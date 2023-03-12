@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Button from '../Button';
 import FormGroup from '../Inputs/FormGroup';
+import Loader from '../Loader/Loader';
 
 type Field = {
   id: number,
@@ -53,7 +54,7 @@ function ResetPassword() {
 
   const {control, handleSubmit, setError } = useForm({resolver: zodResolver(schema)})
   const dispatch = useAppDispatch();
-  const {loading, error} = useAppSelector(state => state.auth)
+  const {loading, error, checkResetTokenLoading} = useAppSelector(state => state.auth)
  const onSubmit = (data:any) => dispatch(signUp(data))  ;
 
   useEffect(() => {
@@ -65,7 +66,7 @@ function ResetPassword() {
  
  
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    checkResetTokenLoading ? <Loader full/> : <form onSubmit={handleSubmit(onSubmit)}>
       {
         register.map(({id, ...field}) => {
           return <FormGroup control={control} {...field}  placeholder={field.label} />

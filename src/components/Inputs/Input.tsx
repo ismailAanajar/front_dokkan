@@ -10,12 +10,10 @@ type Props = {
 } & ComponentProps<'input'>
 
 function Input(props: Props) {
-  // console.log(props);
 
   const {field, fieldState} = useController({
     name: props.name || '', control: props.control
   })
-  console.log(fieldState.error);
   
   return (
     <>

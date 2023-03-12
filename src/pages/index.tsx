@@ -25,7 +25,7 @@ import {
 export default function Home() {
   const {query} = useRouter()
   const dispatch = useAppDispatch()
-  const {loading, error} = useAppSelector(state => state.auth)
+  const {checkResetTokenLoading, error} = useAppSelector(state => state.auth)
   
   useEffect(() => {
     if (query?.reset_password) {
@@ -33,14 +33,16 @@ export default function Home() {
     }
   }, [])
   useEffect(() => {
-      if (loading) {
+    console.log(checkResetTokenLoading);
+    
+      // if (!checkResetTokenLoading) {
         if (error) {
           dispatch(openModal({text: error}))
         }
         else {
           dispatch(openModal({comp: 'reset'}))
         }
-      }
+      // }
   }, [error])
   
   

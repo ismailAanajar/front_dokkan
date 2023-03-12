@@ -66,8 +66,8 @@ function Modal() {
         <button title='close' onClick={() => dispatch(closeModal())} className='text-primary fixed top-4 right-4 bg-white w-8 h-8 flex justify-center items-center rounded-full cursor-pointer'>
           <Icons.CloseMenu/>
         </button>
-        <m.div variants={modal} className="wrapper w-[95%] md:w-[50%] max-w-[450px] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
-          <div className="content pt-12  p-8">
+        <m.div variants={modal} className="wrapper  w-[95%] md:w-[50%] max-w-[450px] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
+          <div className="content pt-12  p-8 flex justify-center [&>*]:w-full">
             {Component ? <Component/> : content?.text}
           </div>
         </m.div>
