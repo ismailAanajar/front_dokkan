@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Carousel from '@dokkan/components/Carousel';
 import Banner from '@dokkan/components/Carousel/Slides/Banner';
 import Category from '@dokkan/components/Carousel/Slides/Category';
+import Modal from '@dokkan/components/Modal';
 import Offer from '@dokkan/components/Offer';
 
 // import { Scrollbar } from 'swiper';
@@ -172,7 +173,7 @@ const HomeCms = {
           </div>
         </div>
       </main>
-      
+      <Modal/>
     </>
   )
 }

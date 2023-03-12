@@ -17,6 +17,8 @@ const iconsMap = {
   Instagram: dynamic(() => import("./instagram.svg")),
   Twitter: dynamic(() => import("./twitter.svg")),
   Youtube: dynamic(() => import("./youtube.svg")),
+  Envelope: dynamic(() => import("./envelope.svg")),
+  Lock: dynamic(() => import("./lock.svg")),
 };
 
 export type Icon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

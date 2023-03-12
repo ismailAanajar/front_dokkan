@@ -13,10 +13,11 @@ type OfferType = {
 }
 
 function Offer({title, image, subTitle, url, style, width}:OfferType) {
-  const classes = classNames('relative w-full h-[250px] md:h-auto block',{
+  const classes = classNames('relative w-full   block',{
     'w-full': width === 100,
     'md:w-[48%]': width === 50,
     'md:w-[31%]': width === 33,
+    'h-[250px] md:h-auto': title ||  subTitle 
   })
   if (!title && ! subTitle && url) {
     return  <Link className={classes} href={url}>
