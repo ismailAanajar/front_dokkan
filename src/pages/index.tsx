@@ -33,16 +33,15 @@ export default function Home() {
     }
   }, [])
   useEffect(() => {
-    console.log(checkResetTokenLoading);
     
-      // if (!checkResetTokenLoading) {
+      if (query?.reset_password) {
         if (error) {
           dispatch(openModal({text: error}))
         }
         else {
           dispatch(openModal({comp: 'reset'}))
         }
-      // }
+      }
   }, [error])
   
   
