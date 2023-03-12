@@ -4,12 +4,18 @@ import { components } from '../components/Modal/index';
 
 type State = {
   isOpen: boolean;
-  ComponentName:  keyof typeof components | null  
+  content: {
+    text?: null | string;
+    comp?:  keyof typeof components | null  
+  } | null; 
 }
 
 const initialState: State = {
   isOpen: false,
-  ComponentName: null
+  content: {
+    comp: null,
+    text: null
+  }
 }
 
 
@@ -17,13 +23,13 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, {payload}:{payload:{name: keyof typeof components}}) => {
+    openModal: (state, {payload}:{payload:{comp?: keyof typeof components, text?: string  | null}}) => {
       state.isOpen = true;
-      state.ComponentName = payload.name;
+      state.content = payload;
     },
     closeModal: (state) => {
       state.isOpen = false;
-      state.ComponentName = null
+      state.content = null
     }
   }
 })

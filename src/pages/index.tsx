@@ -1,11 +1,19 @@
-import { Inter } from 'next/font/google';
-import Head from 'next/head';
+import { useEffect } from 'react';
 
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import { checkResetToken } from '@dokkan/api/authSlice';
+import { openModal } from '@dokkan/api/modalSlice';
 import Carousel from '@dokkan/components/Carousel';
 import Banner from '@dokkan/components/Carousel/Slides/Banner';
 import Category from '@dokkan/components/Carousel/Slides/Category';
 import Modal from '@dokkan/components/Modal';
 import Offer from '@dokkan/components/Offer';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@dokkan/store';
 
 // import { Scrollbar } from 'swiper';
 
@@ -13,9 +21,29 @@ import Offer from '@dokkan/components/Offer';
 
 
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const {query} = useRouter()
+  const dispatch = useAppDispatch()
+  const {loading, error} = useAppSelector(state => state.auth)
+  
+  useEffect(() => {
+    if (query?.reset_password) {
+      dispatch(checkResetToken(query.reset_password))
+    }
+  }, [])
+  useEffect(() => {
+      if (loading) {
+        if (error) {
+          dispatch(openModal({text: error}))
+        }
+        else {
+          dispatch(openModal({comp: 'reset'}))
+        }
+      }
+  }, [error])
+  
+  
   const data = {
   ComponentName:Banner,
   slides: [
@@ -40,116 +68,118 @@ export default function Home() {
     pagination:{ clickable: true },
     // scrollbar:{ draggable: true }
   }
-}
-  const categories = {
-  ComponentName:Category,
-  slides: [
-    {
-      id:1,
-      img: require('@dokkan/assets/images/tablet.webp').default.src
-    },
-    {
-      id:2,
-      img: require('@dokkan/assets/images/laptop.webp').default.src
+  }
+    const categories = {
+    ComponentName:Category,
+    slides: [
+      {
+        id:1,
+        img: require('@dokkan/assets/images/tablet.webp').default.src
+      },
+      {
+        id:2,
+        img: require('@dokkan/assets/images/laptop.webp').default.src
 
-    },
-    {
-      id:3,
-      img: require('@dokkan/assets/images/speaker.webp').default.src
+      },
+      {
+        id:3,
+        img: require('@dokkan/assets/images/speaker.webp').default.src
 
-    },
-    {
-      id:4,
-      img: require('@dokkan/assets/images/tea_maker.webp').default.src
+      },
+      {
+        id:4,
+        img: require('@dokkan/assets/images/tea_maker.webp').default.src
 
-    },
-    {
-      id:5,
-      img: require('@dokkan/assets/images/cycle.webp').default.src
+      },
+      {
+        id:5,
+        img: require('@dokkan/assets/images/cycle.webp').default.src
 
-    },
-  ],
-  options: {
-        slidesPerView:1,
-        spaceBetween:30,
-         scrollbar:{
-          hide: false,
+      },
+    ],
+    options: {
+          slidesPerView:1,
+          spaceBetween:30,
+          scrollbar:{
+            hide: false,
+            
+          },
+          isScrollbar: true,
           
-        },
-        isScrollbar: true,
-        
- breakpoints: {
-    // when window width is >= 320px
-    320: {
-      slidesPerView: 2,
-      spaceBetween: 20
-    },
-    // when window width is >= 480px
-    480: {
-      slidesPerView: 3,
-      spaceBetween: 30
-    },
-    // when window width is >= 640px
-    640: {
-      slidesPerView: 4,
-      spaceBetween: 40
-    }
-  }  }
-}
-const HomeCms = {
-  area: 'promo',
-  content: [
-    {
-      id:1,
-      title: 'The wait is on: iphone 12 max pro',
-      image: require('@dokkan/assets/images/offer1.jpg').default.src,
-      subTitle: 'Last call for up to 32% off!',
-      url: '',
-      width: 100,
-      style: {
-        
-      }      
-    },
-    {
-      id: 2,
-      title: '',
-      image: require('@dokkan/assets/images/offer6.webp').default.src,
-      subTitle: '',
-      url: '#',
-      width: 33,
-      style: {
-        backgroundColor: '#333'
-      }      
-    },
-    {
-      id: 3,
-      title: 'title',
-      Image: '',
-      subTitle: '',
-      url: '',
-      width: 33,
-      style: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#333'
-      }      
-    },
-    {
-      id: 3,
-      // title: 'title',
-      image: require('@dokkan/assets/images/offer6.webp').default.src,
-      // subTitle: '',
-      url: '#',
-      width: 33,
-      style: {
-        color: '#fff',
-        textAlign: 'center',
-        // backgroundColor: '#333'
-      }      
-    },
-  ]
-}
+  breakpoints: {
+      // when window width is >= 320px
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      // when window width is >= 480px
+      480: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      },
+      // when window width is >= 640px
+      640: {
+        slidesPerView: 4,
+        spaceBetween: 40
+      }
+    }  }
+  }
+  const HomeCms = {
+    area: 'promo',
+    content: [
+      {
+        id:1,
+        title: 'The wait is on: iphone 12 max pro',
+        image: require('@dokkan/assets/images/offer1.jpg').default.src,
+        subTitle: 'Last call for up to 32% off!',
+        url: '',
+        width: 100,
+        style: {
+          
+        }      
+      },
+      {
+        id: 2,
+        title: '',
+        image: require('@dokkan/assets/images/offer6.webp').default.src,
+        subTitle: '',
+        url: '#',
+        width: 33,
+        style: {
+          backgroundColor: '#333'
+        }      
+      },
+      {
+        id: 3,
+        title: 'title',
+        Image: '',
+        subTitle: '',
+        url: '',
+        width: 33,
+        style: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#333'
+        }      
+      },
+      {
+        id: 4,
+        // title: 'title',
+        image: require('@dokkan/assets/images/offer6.webp').default.src,
+        // subTitle: '',
+        url: '#',
+        width: 33,
+        style: {
+          color: '#fff',
+          textAlign: 'center',
+          // backgroundColor: '#333'
+        }      
+      },
+    ]
+  }
+
+  
   return (
     <>
       <Head>

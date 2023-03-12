@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { signUp } from '@dokkan/api/authSlice';
-import { openModal } from '@dokkan/api/modalSlice';
 import { IconK } from '@dokkan/assets/icons';
 import {
   useAppDispatch,
@@ -25,46 +24,26 @@ type Field = {
 }
 
 const register: Field[] = [
+  
   {
     id:1,
-    label: 'full name',
-    name: 'fullName',
-    type: 'text',
-    icon: 'User',
-  },
-  {
-    id:2,
-    label: 'email',
-    name: 'email',
-    type: 'email',
-    icon: 'Envelope',
-  },
-  {
-    id:3,
-    label: 'password',
+    label: 'new password',
     name: 'password',
     type: 'password',
     icon: 'Lock',
   },
   {
-    id:4,
-    name: 'password_confirmation',
+    id:2,
     label: 'confirm password',
+    name: 'password_confirmation',
     type: 'password',
     icon: 'Lock',
   },
-  {
-    id:5,
-    label: 'by sign up you are agree to <a href="#">Terms&condition</a>',
-    name: 'privacy',
-    type: 'checkbox',
-  },
+  
 ]
 
-function Register() {
+function ResetPassword() {
   const schema = z.object({
-    fullName: z.string(),
-    email: z.string().email(),
     password: z.string().min(6),
     password_confirmation: z.string().min(6),
   }).refine((data) => data.password === data.password_confirmation, {
@@ -93,11 +72,11 @@ function Register() {
         })
       }
       <div className="flex justify-between pt-5 [&>*]:flex-grow gap-7">
-        <Button loading={loading}  type='submit'  variant='primary'>Register</Button>
-        <Button type='button' onClick={()=>dispatch(openModal({comp: 'login'}))} variant='secondary'>Login</Button>
+        <Button loading={loading}  type='submit'  variant='primary'>submit</Button>
+        {/* <Button type='button' onClick={()=>dispatch(openModal({comp: 'login'}))} variant='secondary'>Login</Button> */}
       </div>
     </form>
   )
 }
 
-export default Register
+export default ResetPassword

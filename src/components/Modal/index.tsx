@@ -16,6 +16,7 @@ import { RootState } from '@dokkan/store';
 import {
   Login,
   Register,
+  ResetPassword,
 } from '../Auth';
 import ForgetPassword from '../Auth/ForgetPassword';
 
@@ -44,16 +45,17 @@ const modal: any = {
  export const components = {
     'login': Login,
     'register': Register,
-    'forget': ForgetPassword
-  }
+    'forget': ForgetPassword,
+    'reset': ResetPassword
+  } 
 
 function Modal() {
-  const {isOpen, ComponentName} = useSelector((state:RootState) => state.modal)
+  const {isOpen, content} = useSelector((state:RootState) => state.modal)
   const dispatch = useDispatch()
  
   let Component: ComponentType | undefined
-  if (ComponentName) {
-    const SelectedComponent  = components[ComponentName];
+  if (content?.comp) {
+    const SelectedComponent  = components[content.comp];
     if (SelectedComponent) {
       Component =  SelectedComponent
     }
@@ -66,7 +68,7 @@ function Modal() {
         </button>
         <m.div variants={modal} className="wrapper w-[95%] md:w-[50%] max-w-[450px] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
           <div className="content pt-12  p-8">
-            {Component && <Component/>}
+            {Component ? <Component/> : content?.text}
           </div>
         </m.div>
       </m.div>}
