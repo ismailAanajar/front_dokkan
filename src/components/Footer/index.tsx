@@ -94,9 +94,9 @@ const Footer = () => {
       </div>
       <div className="py-9 container grid md:grid-cols-2 lg:grid-cols-5 gap-4">
         {
-          links.map((item:any) => {
+          links.map((item:any, i) => {
             if (item.heading === 'logo') {
-              return <div>
+              return <div key={i}>
                   <Logo href='/'/>
                   <p className='text-sm py-3 pl-2 text-gray'>{item.text}</p>
                   <div className='flex gap-4'>
@@ -110,7 +110,7 @@ const Footer = () => {
                   </div>
                </div> 
             }
-            return <div>
+            return <div key={i}>
               <h3 className='font-bold mb-2'>{item.heading}</h3>
               {
                 Object.keys(item.links).map((key:any) => {

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
+import { openModal } from '@dokkan/api/modalSlice';
 import { Icons } from '@dokkan/assets/icons';
 
 import Logo from '../Logo';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
+    const dispatch = useDispatch()
 
     return (
         <div>
@@ -17,29 +21,29 @@ const Header = () => {
                             <Logo href='/'/>
                             <ul className="hidden w-8/12 md:flex items-center justify-center space-x-8">
                                 <li>
-                                    <a href="javascript:void(0)" className="font-sans text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className="font-sans text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         Home
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         Shop
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         About us
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className=" text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         Contact us
                                     </a>
                                 </li>
                             </ul>
                             <div className="md:w-2/12 justify-end flex items-center space-x-4 xl:space-x-8">
                                 <div className="hidden md:flex items-center space-x-4 xl:space-x-8">
-                                    <button aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <button onClick={() =>  dispatch(openModal({comp: 'login'}))} aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         <Icons.User/>
                                     </button>
                                     <button aria-label="view favourites" className="relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
@@ -78,7 +82,7 @@ const Header = () => {
                         <div className="mt-6 p-4">
                             <ul className="flex flex-col space-y-6">
                                 <li>
-                                    <a href="javascript:void(0)" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <a href="#" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         Home
                                         {/* <div>
                                             <svg className="fill-stroke text-black " width={12} height={12} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,17 +92,17 @@ const Header = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <a href="#" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         Shop
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <a href="#" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         About us
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <a href="#" className=" flex items-center justify-between hover:underline text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         Contact us
                                     </a>
                                 </li>
@@ -113,7 +117,7 @@ const Header = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className="relative  text-gray-800 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className="relative  text-gray-800 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         <div>
                                             <Icons.Cart/>
                                         </div>
@@ -123,7 +127,7 @@ const Header = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" className="relative text-gray-800 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
+                                    <a href="#" className="relative text-gray-800 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                                         <div>
                                             <Icons.WhishList/>
                                         </div>

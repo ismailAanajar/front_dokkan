@@ -7,6 +7,8 @@
   :root {
     --color-primary: #12e521;
     --color-secondary: #5a2e35;
+    --input-bg: #efeffa;
+    --input-border: #dfdfe2;
     /* ... */
   }
 }

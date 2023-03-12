@@ -17,8 +17,11 @@ module.exports = {
     colors: {
       primary: 'var(--color-primary)',
       secondary: 'var(--color-secondary)',
+      input_bg: 'var(--input-bg)',
+      input_border: 'var(--input-border)',
       white: '#fff',
-      gray: '#777'
+      gray: '#777',
+      red: '#f20'
     },
     extend: {
       fontFamily: {
@@ -26,5 +29,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
