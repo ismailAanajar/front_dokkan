@@ -8,15 +8,21 @@ export const signIn = createAsyncThunk('auth/singIn', async (values:{email:strin
    
 })
 export const signUp = createAsyncThunk('auth/signUp', async (values:{email:string, password: string, remember:boolean}, {dispatch}) => {
-  console.log(values);
+  
    
 })
 export const forgetPassword = createAsyncThunk('auth/forget_password', async (values:{email:string}, {dispatch}) => {
   console.log(values);
    
 })
-export const checkResetToken = createAsyncThunk('auth/check_reset-token', async (token:string | string[], {dispatch}) => {
-  console.log(token);
+export const checkResetToken = createAsyncThunk('auth/check_reset-token', async (token:string | string[], {rejectWithValue}) => {
+    await new Promise(resolve => {
+    setTimeout(() => {
+      resolve('jjj')
+    }, 7000);
+  })
+
+  return 'fff'
    
 })
 export const resetPassword = createAsyncThunk('auth/reset_password', async (values:{password:string , password_confirmation: string}, {dispatch}) => {
@@ -27,11 +33,13 @@ export const resetPassword = createAsyncThunk('auth/reset_password', async (valu
 
 type State = {
   loading: boolean;
+  checkResetTokenLoading: boolean; 
   error: any
 } 
 
 const initialState:State = {
   loading: false,
+  checkResetTokenLoading: true,
   error: null
 }
 
@@ -79,18 +87,20 @@ const authSlice = createSlice({
     })
     /**** forget password */
 
-    /**** reset password */
+    /**** check reset password token */
     builder.addCase(checkResetToken.pending, state => {
-      state.loading = true
+      state.checkResetTokenLoading = true
     })
     builder.addCase(checkResetToken.fulfilled, state => {
-      state.loading = false
+      state.checkResetTokenLoading = false
     })
     builder.addCase(checkResetToken.rejected, (state, {payload}:any) => {
-      state.loading = false;
+      console.log({payload});
+      
+      state.checkResetTokenLoading = false;
       state.error = payload.error
     })
-    /**** reset password */
+    /**** check reset password  */
 
     /**** reset password */
     builder.addCase(resetPassword.pending, state => {
