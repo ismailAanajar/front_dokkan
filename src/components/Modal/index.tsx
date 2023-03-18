@@ -19,6 +19,8 @@ import {
   ResetPassword,
 } from '../Auth';
 import ForgetPassword from '../Auth/ForgetPassword';
+import Cart from '../Cart';
+import ReviewForm from '../ReviewForm';
 
 type ModalProps = {
   open: boolean;
@@ -28,6 +30,20 @@ type ModalProps = {
 const backdrop = {
   hidden: {opacity:0,transition: {delay: 0.2}},
   visible: {opacity: 1}
+}
+
+
+const cart = {
+  hidden: {
+    opacity: 0,
+    x: '100wv'
+  },
+
+  visible: {
+    opacity: 1,
+    x:0,
+    transition: {delay: 0.3 }
+  }
 }
 
 const modal: any = {
@@ -46,19 +62,30 @@ const modal: any = {
     'login': Login,
     'register': Register,
     'forget': ForgetPassword,
-    'reset': ResetPassword
+    'reset': ResetPassword,
+    'cart': Cart,
+    'review': ReviewForm
   } 
 
 function Modal() {
   const {isOpen, content} = useSelector((state:RootState) => state.modal)
   const dispatch = useDispatch()
  
-  let Component: ComponentType | undefined
+  let Component: ComponentType<{productId: number}> | undefined
   if (content?.comp) {
-    const SelectedComponent  = components[content.comp];
+    const SelectedComponent  = components[content.comp as keyof typeof components];
     if (SelectedComponent) {
       Component =  SelectedComponent
     }
+  }
+  if (isOpen && content?.comp === 'cart') {
+    return <AnimatePresence>
+        <m.div variants={backdrop} initial='hidden' animate='visible' exit='hidden' className='z-10 backdrop-blur-lg bg-[rgba(0,0,0,.2)] fixed top-0 left-0 w-full h-full' onClick={() => dispatch(closeModal())}>
+          <m.div variants={cart} className="absolute right-[8px] top-0 max-h-screen  bg-white" onClick={(e) => e.stopPropagation()}>
+            {Component && <Component {...content.props}/>}
+          </m.div>
+        </m.div>
+    </AnimatePresence>
   }
   return (
     <AnimatePresence mode='wait'>
@@ -68,7 +95,7 @@ function Modal() {
         </button>
         <m.div variants={modal} className="wrapper  w-[95%] md:w-[50%] max-w-[450px] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
           <div className="content pt-12  p-8 flex justify-center [&>*]:w-full">
-            {Component ? <Component/> : content?.text}
+            {Component ? <Component {...content?.props}/> : content?.text}
           </div>
         </m.div>
       </m.div>}

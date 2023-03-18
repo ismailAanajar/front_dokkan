@@ -9,18 +9,19 @@ import Link from 'next/link';
 import Loader from '../Loader/Loader';
 
 type ButtonProps = {
-  variant?: 'primary' | 'secondary' | 'link';
+  variant?: 'primary' | 'secondary' | 'link' | 'outline';
   href?: string;
   loading?: boolean;
 } & ComponentProps<'button'>
 
 const Button = ({href, variant, children, className, loading, ...rest}:PropsWithChildren<ButtonProps>) => {
   const classes = classNames(
-    '  items-center py-2 px-4 cur  font-semibold  shadow-md  focus:outline-none focus:ring-2 focus:ring-opacity-75',
+    ' rounded-md items-center py-2 px-4 cur  font-semibold  shadow-md  focus:outline-none focus:ring-2 focus:ring-opacity-75',
     {
       'bg-primary text-white': variant==='primary',
       'bg-secondary text-white': variant==='secondary', 
       'bg-none shadow-none py-0 px-0 text-primary': variant==='link', 
+      'bg-none shadow-none py-0 px-0 text-primary border border-primary': variant==='outline', 
       'flex gap-2 justify-between disabled cursor-auto': loading,
     },
     className

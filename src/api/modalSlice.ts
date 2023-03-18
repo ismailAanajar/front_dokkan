@@ -7,6 +7,7 @@ type State = {
   content: {
     text?: null | string;
     comp?:  keyof typeof components | null  
+    props?: any
   } | null; 
 }
 
@@ -14,7 +15,8 @@ const initialState: State = {
   isOpen: false,
   content: {
     comp: null,
-    text: null
+    text: null,
+    props: null
   }
 }
 
@@ -23,7 +25,7 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, {payload}:{payload:{comp?: keyof typeof components, text?: string  | null}}) => {
+    openModal: (state, {payload}:{payload:{comp?: keyof typeof components, text?: string  | null, props?: any}}) => {
       state.isOpen = true;
       state.content = payload;
     },

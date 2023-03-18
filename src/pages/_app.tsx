@@ -1,6 +1,11 @@
 import '@dokkan/styles/globals.css';
 
 import {
+  useEffect,
+  useState,
+} from 'react';
+
+import {
   domAnimation,
   LazyMotion,
 } from 'framer-motion';
@@ -33,19 +38,26 @@ type CustomAppProps = AppProps & {
 }
 
  function App({ Component, pageProps, data }: CustomAppProps) {
+  const [load, setLoad] = useState(false)
   if (typeof window !== "undefined") {
     themeConfig(data.template);
   }
+
+  useEffect(() => {
+    if(data.loading) setLoad(true)
+  }, [])
+  
   
   return (
     <Provider store={store}>
-      {!data.loading ? <Loader init/> : <LazyMotion features={domAnimation}>
+      <Loader loading={!load} init/> 
+      <LazyMotion features={domAnimation}>
         <main className={`${inter.variable} font-sans`}>
           <Header/>
           <Component {...pageProps} />   
           <Footer/>   
         </main>
-      </LazyMotion>}
+      </LazyMotion>
     </Provider>
   )
 }
@@ -55,9 +67,10 @@ const api = () => {
     setTimeout(() => {
       resolve({loading: true, template: {
       '--color-primary': '#ff1d52',
+      '--color-primary-light': '#fa6d8e',
       '--color-secondary': '#292b2c',
     }})
-    }, 3000);
+    }, 8000);
   })
 }
 

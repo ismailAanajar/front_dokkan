@@ -20,6 +20,14 @@ const iconsMap = {
   Envelope: dynamic(() => import("./envelope.svg")),
   Lock: dynamic(() => import("./lock.svg")),
   Spinner: dynamic(() => import("./spinner.svg")),
+  Plus: dynamic(() => import("./plus.svg")),
+  Minus: dynamic(() => import("./minus.svg")),
+  FullStar: dynamic(() => import("./fullStar.svg")),
+  EmptyStar: dynamic(() => import("./emptyStar.svg")),
+  AddToCart: dynamic(() => import("./add-to-cart.svg")),
+  RemoveFromCart: dynamic(() => import("./remove-from-cart.svg")),
+  AddToWishlist: dynamic(() => import("./add-to-wishlist.svg")),
+  RemoveFromWishlist: dynamic(() => import("./remove-from-wishlist.svg")),
 };
 
 export type Icon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import parse from 'html-react-parser';
 import Link from 'next/link';
 
 import Button from '../Button';
@@ -13,7 +14,7 @@ type OfferType = {
 }
 
 function Offer({title, image, subTitle, url, style, width}:OfferType) {
-  const classes = classNames('relative w-full   block',{
+  const classes = classNames('relative w-full p-10   block',{
     'w-full': width === 100,
     'md:w-[48%]': width === 50,
     'md:w-[31%]': width === 33,
@@ -25,10 +26,10 @@ function Offer({title, image, subTitle, url, style, width}:OfferType) {
     </Link>
   }
   return (
-    <div className={classes} style={style}>
-      {image && <img className='w-full h-full md:h-auto object-cover md:object-contain block ' src={image} alt="" />}
-      <div className={classNames({'absolute top-1/2 md:left-10 -translate-y-1/2 md:w-1/3':  image})}>
-        {title && <h2 className='text-3xl'>{title}</h2>}
+    <div className={classes} style={{...style, backgroundImage: `url(${image})`, backgroundPosition: 'right 40% bottom 0', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+      {/* {image && <img className={classNames('w-full h-full md:h-auto object-cover md:object-contain block ', )} src={image} alt="" />} */}
+      <div className={classNames({'lg:w-1/2':  image})}>
+        {title && parse(title)}
         {subTitle && <p className='my-7'>{subTitle}</p>}
         {(title || subTitle) && <Button  href={url} variant='primary'>Shop now</Button>}
       </div>

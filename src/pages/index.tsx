@@ -5,6 +5,10 @@ import { useRouter } from 'next/router';
 
 import { checkResetToken } from '@dokkan/api/authSlice';
 import { openModal } from '@dokkan/api/modalSlice';
+import {
+  Product,
+  Section,
+} from '@dokkan/components';
 import Carousel from '@dokkan/components/Carousel';
 import Banner from '@dokkan/components/Carousel/Slides/Banner';
 import Category from '@dokkan/components/Carousel/Slides/Category';
@@ -17,7 +21,15 @@ import {
 
 // import { Scrollbar } from 'swiper';
 
-
+type CategoryProps = {
+  id: number;
+  title: string;
+  image: string;
+  subTitle: string;
+  url: string;
+  width: number;
+  style: any
+}
 
 
 
@@ -47,7 +59,7 @@ export default function Home() {
   
   const data = {
   ComponentName:Banner,
-  slides: [
+  content: [
     {
       id:1,
       title: 'LED 75 INCH F58',
@@ -62,75 +74,167 @@ export default function Home() {
 
     },
   ],
-  options: {
+ 
+  }
+  const bannerOptions =   {
     className: 'banner_swiper',
        slidesPerView:1,
-    navigation: true,
     pagination:{ clickable: true },
     // scrollbar:{ draggable: true }
   }
-  }
-    const categories = {
-    ComponentName:Category,
-    slides: [
-      {
-        id:1,
-        img: require('@dokkan/assets/images/tablet.webp').default.src
-      },
-      {
-        id:2,
-        img: require('@dokkan/assets/images/laptop.webp').default.src
-
-      },
-      {
-        id:3,
-        img: require('@dokkan/assets/images/speaker.webp').default.src
-
-      },
-      {
-        id:4,
-        img: require('@dokkan/assets/images/tea_maker.webp').default.src
-
-      },
-      {
-        id:5,
-        img: require('@dokkan/assets/images/cycle.webp').default.src
-
-      },
-    ],
-    options: {
+  const categoriesOptions ={
           slidesPerView:1,
           spaceBetween:30,
-          scrollbar:{
-            hide: false,
+           
+          // scrollbar:{
+          //   hide: false,
             
-          },
-          isScrollbar: true,
+          // },
+          // isScrollbar: true,
           
-  breakpoints: {
-      // when window width is >= 320px
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 20
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 4,
+            spaceBetween: 40
+          },
+          820: {
+          slidesPerView: 6,
+          spaceBetween: 40
+        }
+        } 
+   } 
+
+   const catalogOptions = {
+     slidesPerView:1,
+     spaceBetween:30,
+     pagination: {
+        el: '.custom-swiper-pagination',
+        clickable: true,
+        renderBullet: function (index:number, className:string) {
+          return '<span class="custom-bullet ' + className + '"></span>';
+        },
       },
-      // when window width is >= 480px
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 30
+     breakpoints: {
+        // when window width is >= 320px
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        // when window width is >= 480px
+        820: {
+          slidesPerView: 3,
+          spaceBetween: 30
+        },
+        // when window width is >= 640px
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 40
+        },
+        // when window width is >= 640px
+        
+      } 
+   }
+    
+  const HomeCms = [
+    {
+      ComponentName:Category,
+      area: 'categories',
+      content: [
+        {
+          id:1,
+          image: require('@dokkan/assets/images/television.png').default.src,
+          title: 'television'
+        },
+        {
+          id:2,
+           image: require('@dokkan/assets/images/watch.png').default.src,
+          title: 'watch'
+        },
+        {
+          id:3,
+           image: require('@dokkan/assets/images/mobile.png').default.src,
+          title: 'mobile'
+        },
+        {
+          id:4,
+           image: require('@dokkan/assets/images/headphone.png').default.src,
+          title: 'headphone'
+        },
+        {
+          id:5,
+           image: require('@dokkan/assets/images/game.png').default.src,
+          title: 'game'
+        },
+        {
+          id:6,
+           image: require('@dokkan/assets/images/camera.png').default.src,
+          title: 'camera'
+        },
+        {
+          id:76,
+           image: require('@dokkan/assets/images/audio.png').default.src,
+          title: 'audio'
+        },
+      ]
+    },
+    {
+      ComponentName:Offer,
+      area: 'promo',
+      content: [
+      
+      {
+        id: 2,
+        title: '<h2 style="font-size: 25px">Sale up to 20% Off</h2>',
+        image: require('@dokkan/assets/images/offer2.jpg').default.src,
+        subTitle: 'Only From $270.00',
+        url: '#',
+        width: 50,
+        style: {
+          color: '#fff',
+          backgroundColor: '#333'
+        }      
       },
-      // when window width is >= 640px
-      640: {
-        slidesPerView: 4,
-        spaceBetween: 40
-      }
-    }  }
-  }
-  const HomeCms = {
-    area: 'promo',
-    content: [
+     
+      {
+        id: 4,
+        title: '<h2 style="font-size: 25px">Fine Smart Speaker</h2>',
+        image: require('@dokkan/assets/images/offer3.jpg').default.src,
+        subTitle: 'Starting at $185.00',
+        url: '#',
+        width: 50,
+        style: {
+          // textAlign: 'center',
+          // backgroundColor: '#333'
+        }      
+      },
+      //  {
+      //   id: 3,
+      //   title: 'title',
+      //   Image: '',
+      //   subTitle: '',
+      //   url: '',
+      //   width: 100,
+      //   style: {
+      //     display: 'flex',
+      //     justifyContent: 'center',
+      //     alignItems: 'center',
+      //     backgroundColor: '#333'
+      //   }      
+      // },
       {
         id:1,
-        title: 'The wait is on: iphone 12 max pro',
+        title: '<h2 style="font-size: 25px">The wait is on: iphone 12 max pro</h2>',
         image: require('@dokkan/assets/images/offer1.jpg').default.src,
         subTitle: 'Last call for up to 32% off!',
         url: '',
@@ -139,46 +243,62 @@ export default function Home() {
           
         }      
       },
-      {
-        id: 2,
-        title: '',
-        image: require('@dokkan/assets/images/offer6.webp').default.src,
-        subTitle: '',
-        url: '#',
-        width: 33,
-        style: {
-          backgroundColor: '#333'
-        }      
-      },
-      {
-        id: 3,
-        title: 'title',
-        Image: '',
-        subTitle: '',
-        url: '',
-        width: 33,
-        style: {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#333'
-        }      
-      },
-      {
-        id: 4,
-        // title: 'title',
-        image: require('@dokkan/assets/images/offer6.webp').default.src,
-        // subTitle: '',
-        url: '#',
-        width: 33,
-        style: {
-          color: '#fff',
-          textAlign: 'center',
-          // backgroundColor: '#333'
-        }      
-      },
     ]
-  }
+    },
+    {
+      ComponentName:Product,
+      area: 'catalog',
+      title: 'catalog',
+      content: [
+        {
+          id: 1,
+          image: require('@dokkan/assets/images/product8.jpg').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 67,
+          rating: 2,
+          reviewsNumber: 12
+        },
+        {
+          id: 2,
+          image: require('@dokkan/assets/images/product5.jpg').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 260,
+          rating: 5,
+          reviewsNumber: 55
+        },
+        {
+          id: 3,
+          image: require('@dokkan/assets/images/product6.jpg').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 55,
+          rating: 3,
+          reviewsNumber: 12
+        },
+        {
+          id: 4,
+          image: require('@dokkan/assets/images/product7.jpg').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 120,
+          rating: 1,
+          reviewsNumber: 2
+        },
+        {
+          id: 5,
+          image: require('@dokkan/assets/images/product9.jpg').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 67,
+          rating: 2,
+          reviewsNumber: 12
+        },
+        {
+          id: 6,
+          image: require('@dokkan/assets/images/product4.webp').default.src,
+          title: 'Xiaomi Poco M4 pro 5G',
+          price: 67
+        },
+      ]
+    }
+  ]
 
   
   return (
@@ -190,18 +310,37 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Carousel data={data}/>
-        <div className='categories py-9'>
-          <div className="container">
-            <Carousel data={categories}/>
-          </div>
-        </div>
-        <div className='blocks py-9'>
-          <div className='container flex flex-wrap gap-4 justify-between'>
-            {
-              HomeCms.content.map(item => <Offer key={item.id} {...item} />)
-            }
-          </div>
+        <Carousel data={data} options={bannerOptions}/>
+       
+        <div className='blocks'>
+          {
+            HomeCms.map(block => {
+              if (block.area === 'promo') {
+                return <div className='container flex flex-wrap gap-4 justify-between'>
+                  {
+                    // @ts-ignore
+                    block.content.map((item ) => <block.ComponentName key={item.id} {...item} />)
+                  }
+                </div>
+              }
+              else if(block.area === 'catalog') {
+                return <Section>
+                          <Section.Heading className='mb-10'>Trending Products</Section.Heading>
+                          <Carousel data={block} options={catalogOptions}/>
+                        </Section>  
+              }
+              else if (block.area ='categories') {
+                return  <Section>
+                          <Section.Heading>Top categories</Section.Heading>
+                          <Section.SubHeading>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</Section.SubHeading>
+                          <Carousel data={block} options={categoriesOptions}/>
+                        </Section>
+                           
+                         
+              }
+            })
+          }
+          
         </div>
       </main>
       <Modal/>

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-
-import { openModal } from '@dokkan/api/modalSlice';
 import { Icons } from '@dokkan/assets/icons';
-
 import Logo from '../Logo';
+import { openModal } from '@dokkan/api/modalSlice';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -14,7 +12,7 @@ const Header = () => {
     return (
         <div>
             <div>
-                <div className="relative">
+                <div className="relative bg-white">
                     {/* For large screens */}
                     <div className="py-3">
                         <div className="container mx-auto flex items-center justify-between">
@@ -42,7 +40,7 @@ const Header = () => {
                                 </li>
                             </ul>
                             <div className="md:w-2/12 justify-end flex items-center space-x-4 xl:space-x-8">
-                                <div className="hidden md:flex items-center space-x-4 xl:space-x-8">
+                                <div className="hidden md:flex items-baseline space-x-4 xl:space-x-8">
                                     <button onClick={() =>  dispatch(openModal({comp: 'login'}))} aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         <Icons.User/>
                                     </button>
@@ -50,7 +48,7 @@ const Header = () => {
                                         <Icons.WhishList/>
                                         <span className='absolute -top-2 -right-1 w-[18px] h-[18px] bg-primary text-xs rounded-full flex justify-center items-center text-white'>0</span>
                                     </button>
-                                    <button aria-label="go to cart" className="text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 relative">
+                                    <button aria-label="go to cart" className="text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 relative" onClick={() =>  dispatch(openModal({comp: 'cart'}))}>
                                         <Icons.Cart/>
                                         <span className='absolute -top-2 -right-1 w-[18px] h-[18px] bg-primary text-xs rounded-full flex justify-center items-center text-white'>0</span>
                                     </button>
