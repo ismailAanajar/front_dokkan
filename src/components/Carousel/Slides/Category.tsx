@@ -1,13 +1,15 @@
 import Link from 'next/link';
 
 type CategoryProps = {
-  img: string
+  image: string;
+  title: string
 }
 
-function Category({img}:CategoryProps) {
+function Category({image, title}:CategoryProps) {
   return (
-    <Link href={'#'}>
-      <img className='w-full' src={img} alt="" />
+    <Link href={'#'} className='text-center block'>
+      <img className='w-full' src={image}  alt="" />
+      <span>{title}</span>
     </Link>
   )
 }

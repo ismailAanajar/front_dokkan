@@ -14,13 +14,14 @@ import {
 
 import Checkbox from './Checkbox';
 import Input from './Input';
+import Textarea from './Textarea';
 
 type Props = {
   control: Control;
   icon?: IconK;
   label?: string;
   
-} & ComponentProps<'input'>
+} & ComponentProps<'input'> & ComponentProps<'textarea'>
 
 const FormGroup = (props: Props) => {
 
@@ -35,6 +36,10 @@ const FormGroup = (props: Props) => {
       break;
     case 'checkbox':
       field = <Checkbox {...props} />  
+      break;
+    case 'textarea':
+      field = <Textarea {...rest} />  
+      break;
     default:
       break;
   }

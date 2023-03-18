@@ -7,6 +7,7 @@ import {
 import {
   auth,
   modal,
+  review,
   user,
 } from '@dokkan/api';
 import { configureStore } from '@reduxjs/toolkit';
@@ -15,7 +16,8 @@ export const store = configureStore({
   reducer: {
     user,
     modal,
-    auth
+    auth,
+    review
   },
 })
 
