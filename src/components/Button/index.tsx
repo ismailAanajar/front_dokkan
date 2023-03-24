@@ -16,7 +16,7 @@ type ButtonProps = {
 
 const Button = ({href, variant, children, className, loading, ...rest}:PropsWithChildren<ButtonProps>) => {
   const classes = classNames(
-    ' rounded-md items-center py-2 px-4 cur  font-semibold  shadow-md  focus:outline-none focus:ring-2 focus:ring-opacity-75',
+    ' rounded-md items-center py-2 px-4 cur  font-semibold  shadow-md  ',
     {
       'bg-primary text-white': variant==='primary',
       'bg-secondary text-white': variant==='secondary', 

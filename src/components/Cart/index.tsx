@@ -1,3 +1,5 @@
+import useLocalStorage from 'use-local-storage';
+
 import Button from '../Button';
 import Item from './Item';
 
@@ -28,6 +30,7 @@ function Cart() {
   ]
 
   // const 
+  const [localStep, setLocalStep] = useLocalStorage('step', '')
   
   return (
     <div className="bg-white h-screen flex flex-col ">
@@ -40,8 +43,8 @@ function Cart() {
         }
       </div>
       <div className="p-4 flex flex-col gap-3">
-        <Button href='#' variant='primary'>checkout now </Button>
-        <Button href='#' variant='link' className='border border-primary'>view cart</Button>
+        <Button href='/cart'  variant='primary'>checkout now </Button>
+        <Button href='/cart'  variant='link' className='border border-primary'>view cart</Button>
       </div>
     </div>
   )

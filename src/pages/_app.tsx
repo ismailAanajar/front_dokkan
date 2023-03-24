@@ -9,19 +9,28 @@ import {
   domAnimation,
   LazyMotion,
 } from 'framer-motion';
-import type {
-  AppContext,
-  AppProps,
-} from 'next/app';
+import type { AppProps } from 'next/app';
 import { Space_Grotesk } from 'next/font/google';
-import { Provider } from 'react-redux';
 
+import {
+  getAppConfig,
+  setLoading,
+} from '@dokkan/api/appSlice';
+import { getUser } from '@dokkan/api/userSlice';
 import { Header } from '@dokkan/components';
 import Footer from '@dokkan/components/Footer';
 import Loader from '@dokkan/components/Loader/Loader';
+import Modal from '@dokkan/components/Modal';
 
-import { store } from '../store';
+import {
+  useAppDispatch,
+  useAppSelector,
+  wrapper,
+} from '../store';
 import themeConfig from '../theme';
+
+// import { store } from '../store';
+
 
 const inter = Space_Grotesk({
   weight: ['300', '400'],
@@ -31,55 +40,48 @@ const inter = Space_Grotesk({
 
 
 type CustomAppProps = AppProps & {
-  data: {
-    loading: boolean;
-    template: any
-  }
+  data: any
 }
 
- function App({ Component, pageProps, data }: CustomAppProps) {
+ function App({ Component, pageProps  }: CustomAppProps) {
   const [load, setLoad] = useState(false)
+  const dispatch = useAppDispatch()
+  const {template, loading} = useAppSelector(state => state.app)
   if (typeof window !== "undefined") {
-    themeConfig(data.template);
+    themeConfig(template);
   }
 
   useEffect(() => {
-    if(data.loading) setLoad(true)
-  }, [])
-  
+    dispatch(setLoading())
+  }, [loading])
+
   
   return (
-    <Provider store={store}>
-      <Loader loading={!load} init/> 
+    // <Provider store={store}>
+    <>
+      <Loader loading={loading} init/> 
       <LazyMotion features={domAnimation}>
-        <main className={`${inter.variable} font-sans`}>
+        <div className={`${inter.variable} font-sans`}>
           <Header/>
           <Component {...pageProps} />   
           <Footer/>   
-        </main>
+        <Modal/>
+        </div>
       </LazyMotion>
-    </Provider>
+      </>
+    // </Provider>
   )
 }
 
-const api = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({loading: true, template: {
-      '--color-primary': '#ff1d52',
-      '--color-primary-light': '#fa6d8e',
-      '--color-secondary': '#292b2c',
-    }})
-    }, 8000);
-  })
-}
+App.getInitialProps = wrapper.getInitialPageProps(store => async (args) => {
+  const {dispatch } = store
+  
+  await Promise.all([dispatch(getUser()), dispatch(getAppConfig())])
 
-App.getInitialProps = async (appContext: AppContext) => {
-  const data = await api();
 
   return {
-    data
+    
   }
-}
+})
 
-export default App;
+export default wrapper.withRedux(App);

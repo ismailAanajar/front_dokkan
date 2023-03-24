@@ -34,8 +34,8 @@ function Product({id,image, title, price, rating, reviewsNumber}: Props) {
                     emptySymbol={<Icons.EmptyStar/>}
                     fullSymbol={<Icons.FullStar/>} 
             />
-            <span className='text-xs'>({reviewsNumber})</span>
-            <Button onClick={() => dispatch(openModal({comp: 'review', props:{productId: id}}))} variant='link' className='ml-auto !py-0 px-1 outline-none'>Rate</Button>
+            <span className='text-xs ml-1 self-baseline'>({reviewsNumber})</span>
+            <Button onClick={() => dispatch(openModal({comp: 'review', props:{productId: id}}))} variant='link' className='!pr-0 text-sm ml-auto !py-0 px-1 outline-none'>Rate</Button>
           </div>
         </div>
         <div className='flex justify-between gap-2 pt-2'>

@@ -14,18 +14,24 @@ import {
 
 import Checkbox from './Checkbox';
 import Input from './Input';
+import Select from './Select';
 import Textarea from './Textarea';
 
 type Props = {
   control: Control;
   icon?: IconK;
   label?: string;
+  className?: string
+  options?:  {
+    value: string | number;
+    label: string | number;
+}[]
   
-} & ComponentProps<'input'> & ComponentProps<'textarea'>
+} & ComponentProps<'input'> & ComponentProps<'textarea'> & ComponentProps<'select'>
 
 const FormGroup = (props: Props) => {
 
-  const {label, icon, ...rest} = props; 
+  const {label, icon, className, options, ...rest} = props; 
   let field = null;
 
   switch (props.type) {
@@ -40,6 +46,9 @@ const FormGroup = (props: Props) => {
     case 'textarea':
       field = <Textarea {...rest} />  
       break;
+    case 'select':
+      field = <Select {...rest} options={options}/>  
+      break;
     default:
       break;
   }
@@ -47,8 +56,8 @@ const FormGroup = (props: Props) => {
   const Icon: ComponentType<{className: string}> | undefined | ComponentType<SVGProps<SVGSVGElement>> = icon && Icons[icon]
 
   return ( 
-    <div className='my-4'>
-      {label && props.type !== 'checkbox' ? <label className='text-xs text-secondary'>{label}</label> : null}
+    <div className={classNames('my-4', className)}>
+      {label && props.type !== 'checkbox' ? <label className='text-xs text-gray'>{label}</label> : null}
       <div className={classNames('relative', {
         'border border-input_border flex items-center p-[2px]': props.type !== 'checkbox' 
       })}>

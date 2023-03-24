@@ -13,19 +13,10 @@ import { closeModal } from '@dokkan/api/modalSlice';
 import { Icons } from '@dokkan/assets/icons';
 import { RootState } from '@dokkan/store';
 
-import {
-  Login,
-  Register,
-  ResetPassword,
-} from '../Auth';
-import ForgetPassword from '../Auth/ForgetPassword';
+import Addresses from '../Address';
+import { AuthType } from '../Auth';
 import Cart from '../Cart';
 import ReviewForm from '../ReviewForm';
-
-type ModalProps = {
-  open: boolean;
-  close: () => void
-}
 
 const backdrop = {
   hidden: {opacity:0,transition: {delay: 0.2}},
@@ -59,22 +50,21 @@ const modal: any = {
   }
 }
  export const components = {
-    'login': Login,
-    'register': Register,
-    'forget': ForgetPassword,
-    'reset': ResetPassword,
+    'auth': AuthType,
     'cart': Cart,
-    'review': ReviewForm
+    'review': ReviewForm,
+    'address': Addresses
   } 
 
 function Modal() {
   const {isOpen, content} = useSelector((state:RootState) => state.modal)
   const dispatch = useDispatch()
  
-  let Component: ComponentType<{productId: number}> | undefined
+  let Component: ComponentType<{productId: number, type: "register" | "login" | "forget" | "reset" | 0 | 1}> | undefined
   if (content?.comp) {
     const SelectedComponent  = components[content.comp as keyof typeof components];
     if (SelectedComponent) {
+      // @ts-ignore
       Component =  SelectedComponent
     }
   }
@@ -93,7 +83,7 @@ function Modal() {
         <button title='close' onClick={() => dispatch(closeModal())} className='text-primary fixed top-4 right-4 bg-white w-8 h-8 flex justify-center items-center rounded-full cursor-pointer'>
           <Icons.CloseMenu/>
         </button>
-        <m.div variants={modal} className="wrapper  w-[95%] md:w-[50%] max-w-[450px] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
+        <m.div variants={modal} className="wrapper  w-[95%] lg:w-auto min-w-[30%] max-w-[90vw] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
           <div className="content pt-12  p-8 flex justify-center [&>*]:w-full">
             {Component ? <Component {...content?.props}/> : content?.text}
           </div>
