@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
-import { Icons } from '@dokkan/assets/icons';
-import Logo from '../Logo';
-import { openModal } from '@dokkan/api/modalSlice';
 import { useDispatch } from 'react-redux';
+
+import { openModal } from '@dokkan/api/modalSlice';
+import { Icons } from '@dokkan/assets/icons';
+
+import Logo from '../Logo';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -41,7 +43,8 @@ const Header = () => {
                             </ul>
                             <div className="md:w-2/12 justify-end flex items-center space-x-4 xl:space-x-8">
                                 <div className="hidden md:flex items-baseline space-x-4 xl:space-x-8">
-                                    <button onClick={() =>  dispatch(openModal({comp: 'login'}))} aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <button onClick={() =>  {dispatch(openModal({comp: 'auth', props:{type: 'login'}}))
+                                    }} aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         <Icons.User/>
                                     </button>
                                     <button aria-label="view favourites" className="relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">

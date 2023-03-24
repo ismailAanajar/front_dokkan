@@ -8,6 +8,7 @@ export const signIn = createAsyncThunk('auth/singIn', async (values:{email:strin
    
 })
 export const signUp = createAsyncThunk('auth/signUp', async (values:{email:string, password: string, remember:boolean}, {dispatch}) => {
+  console.log(values);
   
    
 })

@@ -81,7 +81,7 @@ const Footer = () => {
   return (
     <div>
       <div className="news_letter bg-primary ">
-        <div className="container  md:flex justify-between py-9 gap-10">
+        <div className="container  md:flex justify-between items-center py-9 gap-10">
           <div>
             <h3 className='font-bold capitalize text-white text-4xl'>join our newsletter now</h3>
             <p className='text-white'>Register now to get updates on promotions.</p>
