@@ -14,8 +14,8 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
       setTimeout(() => {
         resolve({ template: {
             '--color-primary': '#ff1d52',
-            '--color-primary-light': '#e6aebb',
-            '--color-secondary': '#f57e7e',
+            '--color-primary-light': '#ffe1e6',
+            '--color-secondary': '#0f3460',
           },
           forms: {
             login: [
@@ -25,6 +25,7 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
                     name: 'email',
                     type: 'email',
                     icon: 'Envelope',
+                    require: true
                   },
                   {
                     id:2,
@@ -32,6 +33,7 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
                     name: 'password',
                     type: 'password',
                     icon: 'Lock',
+                    require: true
                   },
                   {
                     id:3,
@@ -185,6 +187,7 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
                         label: 'first name',
                         name: 'first_name',
                         type: 'text',
+                        require: true
                       },
                       {
                         id:21,

@@ -28,6 +28,7 @@ const iconsMap = {
   RemoveFromCart: dynamic(() => import("./remove-from-cart.svg")),
   AddToWishlist: dynamic(() => import("./add-to-wishlist.svg")),
   RemoveFromWishlist: dynamic(() => import("./remove-from-wishlist.svg")),
+  ArrowRight: dynamic(() => import("./arrow_right.svg")),
 };
 
 export type Icon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

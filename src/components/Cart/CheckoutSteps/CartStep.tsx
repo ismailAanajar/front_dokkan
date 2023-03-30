@@ -1,6 +1,11 @@
 import React from 'react';
 
+import { openModal } from '@dokkan/api/modalSlice';
 import Button from '@dokkan/components/Button';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@dokkan/store';
 
 import Item from '../Item';
 import StepLayout from './stepLayout';
@@ -28,7 +33,24 @@ const cart = [
       image: require('@dokkan/assets/images/product3.png').default.src
     },
   ]
+
+
+
 function CartStep({setStep}: {setStep:(step:'details') => void}) {
+  const dispatch = useAppDispatch()
+  const {token} = useAppSelector(state => state.auth)
+
+  // const {push} = useRouter()
+  const action = () => { setStep('details');  console.log('helkkk')}
+  const handleNextStep = () => {
+    if (token) {
+       setStep('details') 
+    }
+    else {
+      dispatch(openModal({comp: 'auth', props: {type: 'login'}}))
+    }
+  }  
+
   return (
     <StepLayout>
       <StepLayout.Right>
@@ -40,7 +62,7 @@ function CartStep({setStep}: {setStep:(step:'details') => void}) {
           <div className='flex justify-between border-b border-gray_light py-2'>
             <span>Total:</span><strong>$896</strong>
           </div>
-          <Button variant='primary' className='shadow-none w-full mt-2' onClick={() => setStep('details')}>Checkout now</Button>
+          <Button variant='primary' className='shadow-none w-full mt-2' onClick={handleNextStep}>Checkout now</Button>
       </StepLayout.Left>
     </StepLayout>
   )

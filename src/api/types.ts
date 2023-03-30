@@ -35,6 +35,23 @@ export type Field = {
 
 }
 
+
+
+
+export type Order = {
+  id: number;
+  number: number;
+  status: 'pending' | 'processing' | 'complete' | 'failed',
+  created_at: string;
+  total: number;
+
+  products: {
+    id: number;
+    title: string;
+    image: string;
+  }[]
+}  
+
 // export type User = {
 //   loading: boolean;
 //   userInfo:  UserInfo

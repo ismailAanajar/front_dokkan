@@ -4,10 +4,10 @@ import { PropsWithChildren } from 'react';
 
 import { TabProvider } from './useTabs';
 
-const Tabs = (props:PropsWithChildren<{activeTab?: number}>) => {
+const Tabs = (props:PropsWithChildren<{activeTab?: number, className?: string}>) => {
   return ( 
     
-      <TabProvider activeTab={props.activeTab}>
+      <TabProvider activeTab={props.activeTab} >
         <div {...props}/>
       </TabProvider>
    );

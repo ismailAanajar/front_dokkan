@@ -4,9 +4,11 @@ import {
   PropsWithChildren,
 } from 'react';
 
-const TabList = ({children}: PropsWithChildren) => {
+import classNames from 'classnames';
+
+const TabList = ({children, className }: PropsWithChildren<{className?: string}>) => {
   return ( 
-    <div className="flex">
+    <div className={classNames('flex', className)}>
       {
         Children.map(children, (child, index) => {
           // @ts-ignore

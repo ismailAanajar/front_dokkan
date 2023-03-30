@@ -48,8 +48,8 @@ const AddressCard = ({type,addresses,  addNewAddress}: {type:'shipping' | 'belli
           {
             addresses.map((item:Address) => {
               return (
-                <div onClick={() => !item.isPrimary && dispatch(setAddressAsPrimary(item.id))} key={item.id} className={classNames('bg-secondary  hover:bg-gray_light justify-between  gap-2 p-2 rounded-sm cursor-pointer',{
-                  '!bg-primary_light border border-primary': item.isPrimary
+                <div onClick={() => !item.isPrimary && dispatch(setAddressAsPrimary(item.id))} key={item.id} className={classNames('bg-gray  hover:bg-gray_light justify-between  gap-2 p-2 rounded-sm cursor-pointer',{
+                  '!bg-secondary border border-primary': item.isPrimary
                 })}>
                   <span className='inline-block mx-2'>{item.first_name}  {item.last_name}</span>|
                   <span className='inline-block mx-2'>{item.email}</span>|

@@ -79,7 +79,7 @@ const links = [
 const Footer = () => {
 
   return (
-    <div>
+    <div className='bg-secondary text-white'>
       <div className="news_letter bg-primary ">
         <div className="container  md:flex justify-between items-center py-9 gap-10">
           <div>
@@ -102,7 +102,7 @@ const Footer = () => {
                   <div className='flex gap-4'>
                     {
                       Object.keys(social).map(key => {
-                        return <a className='text-gray' href={social[key as keyof typeof social].url}>
+                        return <a className='text-gray_light' href={social[key as keyof typeof social].url}>
                           {socialIcons[key as keyof typeof socialIcons]}
                         </a>
                       })
@@ -115,7 +115,7 @@ const Footer = () => {
               {
                 Object.keys(item.links).map((key:any) => {
                   
-                  return <Link className='block text text-gray' href   ={`${item.links[key]}`}>{key}</Link>
+                  return <Link className='block w-fit text text-gray' href   ={`${item.links[key]}`}>{key}</Link>
                 })
               }
             </div>

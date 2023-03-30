@@ -16,8 +16,9 @@ type ButtonProps = {
 
 const Button = ({href, variant, children, className, loading, ...rest}:PropsWithChildren<ButtonProps>) => {
   const classes = classNames(
-    ' rounded-md items-center py-2 px-4 cur  font-semibold  shadow-md  ',
+    ' rounded-md items-center  cur  font-semibold  shadow-md  ',
     {
+      'py-2 px-4': !href,
       'bg-primary text-white': variant==='primary',
       'bg-secondary text-white': variant==='secondary', 
       'bg-none shadow-none py-0 px-0 text-primary': variant==='link', 
@@ -26,7 +27,7 @@ const Button = ({href, variant, children, className, loading, ...rest}:PropsWith
     },
     className
   )
-  const button = href ? <Link href={href}>{children}</Link>: children
+  const button = href ? <Link href={href} className='block py-2 px-4'>{children}</Link>: children
   return (
     <button  className={classes} {...rest}>
       {button}

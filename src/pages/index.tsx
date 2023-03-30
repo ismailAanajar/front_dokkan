@@ -40,6 +40,7 @@ export default function Home() {
   
   useEffect(() => {
     if (query?.reset_password) {
+      // @ts-ignore
       dispatch(checkResetToken(query.reset_password))
     }
   }, [])
@@ -312,14 +313,15 @@ export default function Home() {
     <meta property="og:image" content="{dynamic-image-url}"/>
       </Head>
       <main>
-        <button onClick={ () => {
-            let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600,left=100,top=100`;
-            let pictureUrl = encodeURIComponent('http://via.placeholder.com/640x360');
-            let shareparams = `u=front-dokkan-mkhkwmj4u-ismailaanajar.vercel.app&title=${'title'}&description=${'description'}&picture=http://via.placeholder.com/640x360`;
-            let shareUrl = `https://www.facebook.com/sharer/sharer.php?${shareparams}`;
-            window.open(shareUrl, 'sharer', params);
-            }
-        } >share</button>
+        {/* <Script
+          id="content-js"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: /<script\b[^>]*>([\s\S]*?)<\/script>/gm.exec(script)?.[0] || '',
+          }}
+        /> */}
+        {/* {parse(script)} */}
+
         <Carousel data={data} options={bannerOptions}/>
        
         <div className='blocks'>

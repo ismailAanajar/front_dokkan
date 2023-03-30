@@ -11,6 +11,7 @@ import {
 } from '@dokkan/api/authSlice';
 import { openModal } from '@dokkan/api/modalSlice';
 import { Field } from '@dokkan/api/types';
+import { useLocalStorage } from '@dokkan/hooks';
 import {
   useAppDispatch,
   useAppSelector,
@@ -37,19 +38,18 @@ const orActions = {
   forget: 'login'
 } 
 
-function AuthType({type}: {type: 'register' | 'login' | 'forget' | 'reset'}) {
+function AuthType({type, action}: {type: 'register' | 'login' | 'forget' | 'reset', action: string}) {
   const forms = useAppSelector(state => state.app.forms)
   
   const schema = z.object(rules(forms[type]));
-
-  console.log(rules(forms[type]));
   
-
   const {control, handleSubmit, setError, reset } = useForm({resolver: zodResolver(schema)})
   const dispatch = useAppDispatch();
-  const {loading, error} = useAppSelector(state => state.auth)
+  const {setStep} = useLocalStorage()
+  const {loading, error, token} = useAppSelector(state => state.auth)
+  
   // @ts-ignore
- const onSubmit = (data:any) => dispatch(actions[type](data))  ;
+ const onSubmit = (data:any) => dispatch(actions[type]({data:data, action}))  ;
   useEffect(() => {
      reset(forms[type].reduce((acc:any, curr:any) => {
       acc[curr.name] = ''
@@ -62,6 +62,12 @@ function AuthType({type}: {type: 'register' | 'login' | 'forget' | 'reset'}) {
       errorHandling({error, setError})
     }
   }, [error])
+
+  useEffect(() => {
+    if (token) {
+      setStep('details')
+    }
+  },[token])
 
   return (
     <>

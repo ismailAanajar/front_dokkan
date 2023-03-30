@@ -3,12 +3,14 @@ import {
   PropsWithChildren,
 } from 'react';
 
+import classNames from 'classnames';
+
 import { useTabs } from './useTabs';
 
-const TabPanels = ({children}: PropsWithChildren) => {
+const TabPanels = ({className, children}: PropsWithChildren<{className?: string}>) => {
   const {activeIndex} = useTabs();
   return ( 
-    <div>
+    <div className={classNames(className)}>
       {Children.toArray(children)[activeIndex]}
     </div>
    );
