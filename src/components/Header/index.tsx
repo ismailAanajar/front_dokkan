@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
 import { openModal } from '@dokkan/api/modalSlice';
 import { Icons } from '@dokkan/assets/icons';
+import { useAppSelector } from '@dokkan/store';
 
 import Logo from '../Logo';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
     const dispatch = useDispatch()
+    const token = useAppSelector(state => state.auth.token)
+    const  {push} = useRouter()
 
     return (
         <div>
             <div>
-                <div className="relative bg-white">
+                <div className="relative bg-white shadow-md">
                     {/* For large screens */}
                     <div className="py-3">
                         <div className="container mx-auto flex items-center justify-between">
@@ -43,7 +47,7 @@ const Header = () => {
                             </ul>
                             <div className="md:w-2/12 justify-end flex items-center space-x-4 xl:space-x-8">
                                 <div className="hidden md:flex items-baseline space-x-4 xl:space-x-8">
-                                    <button onClick={() =>  {dispatch(openModal({comp: 'auth', props:{type: 'login'}}))
+                                    <button onClick={() =>  { token ? push('/profile') : dispatch(openModal({comp: 'auth', props:{type: 'login'}}))
                                     }} aria-label="view profile" className=" relative text-gray-800  focus:outline-none focus:ring-2 focus:ring-gray-800">
                                         <Icons.User/>
                                     </button>

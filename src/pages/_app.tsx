@@ -1,9 +1,6 @@
 import '@dokkan/styles/globals.css';
 
-import {
-  useEffect,
-  useState,
-} from 'react';
+import { useState } from 'react';
 
 import {
   domAnimation,
@@ -11,11 +8,9 @@ import {
 } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import { Space_Grotesk } from 'next/font/google';
+import { Router } from 'next/router';
 
-import {
-  getAppConfig,
-  setLoading,
-} from '@dokkan/api/appSlice';
+import { getAppConfig } from '@dokkan/api/appSlice';
 import { getUser } from '@dokkan/api/userSlice';
 import { Header } from '@dokkan/components';
 import Footer from '@dokkan/components/Footer';
@@ -23,7 +18,6 @@ import Loader from '@dokkan/components/Loader/Loader';
 import Modal from '@dokkan/components/Modal';
 
 import {
-  useAppDispatch,
   useAppSelector,
   wrapper,
 } from '../store';
@@ -44,22 +38,30 @@ type CustomAppProps = AppProps & {
 }
 
  function App({ Component, pageProps  }: CustomAppProps) {
-  const [load, setLoad] = useState(false)
-  const dispatch = useAppDispatch()
-  const {template, loading} = useAppSelector(state => state.app)
+  const {template}  = useAppSelector(state => state.app)
+   const [isLoading, setIsLoading] = useState(false);
+
+  const handleStart = () => {
+    setIsLoading(true);
+  };
+
+  const handleComplete = () => {
+    setIsLoading(false);
+  };
+
+  Router.events.on('routeChangeStart', handleStart);
+  Router.events.on('routeChangeComplete', handleComplete);
+  Router.events.on('routeChangeError', handleComplete);
+
+
   if (typeof window !== "undefined") {
     themeConfig(template);
   }
 
-  useEffect(() => {
-    dispatch(setLoading())
-  }, [loading])
-
-  
   return (
     // <Provider store={store}>
     <>
-      <Loader loading={loading} init/> 
+      <Loader loading={isLoading} init/> 
       <LazyMotion features={domAnimation}>
         <div className={`${inter.variable} font-sans`}>
           <Header/>
@@ -74,11 +76,10 @@ type CustomAppProps = AppProps & {
 }
 
 App.getInitialProps = wrapper.getInitialPageProps(store => async (args) => {
-  const {dispatch } = store
-  
-  await Promise.all([dispatch(getUser()), dispatch(getAppConfig())])
-
-
+  const {dispatch, getState } = store
+  if (!getState().user.userInfo.name || !getState().app.template) {
+    await Promise.all([dispatch(getUser()), dispatch(getAppConfig())])
+  }
   return {
     
   }

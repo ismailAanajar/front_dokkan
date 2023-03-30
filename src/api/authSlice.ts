@@ -1,22 +1,36 @@
+import { closeModal } from '@dokkan/api/modalSlice';
+import { setCheckoutStep } from '@dokkan/api/userSlice';
 import {
   createAsyncThunk,
   createSlice,
 } from '@reduxjs/toolkit';
 
-export const signIn = createAsyncThunk('auth/singIn', async (values:{email:string, password: string, remember:boolean}, {dispatch}) => {
-  console.log(values);
+export const signIn = createAsyncThunk('auth/singIn', async ({data, action}:{data:{email:string, password: string, remember:boolean}, action?: string}, {dispatch, rejectWithValue}) => {
+ try {
+   
+  if (action) {
+    eval(action)()
+  }
+  console.log({data, action});
+  dispatch(closeModal())  
+  dispatch(setCheckoutStep('details'))  
+ } catch (error) {
+   rejectWithValue(error)
+ }
+  
+  return {token: 'lldldldvoifjvfn'}
    
 })
-export const signUp = createAsyncThunk('auth/signUp', async (values:{email:string, password: string, remember:boolean}, {dispatch}) => {
-  console.log(values);
+export const signUp = createAsyncThunk('auth/signUp', async ({data, action}:{data:{email:string, password: string, remember:boolean}, action?: () => void}, {dispatch}) => {
+  console.log(data);
   
    
 })
-export const forgetPassword = createAsyncThunk('auth/forget_password', async (values:{email:string}, {dispatch}) => {
-  console.log(values);
+export const forgetPassword = createAsyncThunk('auth/forget_password', async ({data, action}:{data:{email:string}, action: () => void}, {dispatch}) => {
+  console.log(data);
    
 })
-export const checkResetToken = createAsyncThunk('auth/check_reset-token', async (token:string | string[], {rejectWithValue}) => {
+export const checkResetToken = createAsyncThunk('auth/check_reset-token', async ({data, action}:{data:{token:string | string[]},action?: () => void}, {rejectWithValue}) => {
     await new Promise(resolve => {
     setTimeout(() => {
       resolve('jjj')
@@ -26,20 +40,22 @@ export const checkResetToken = createAsyncThunk('auth/check_reset-token', async 
   return 'fff'
    
 })
-export const resetPassword = createAsyncThunk('auth/reset_password', async (values:{password:string , password_confirmation: string}, {dispatch}) => {
-  console.log(values);
+export const resetPassword = createAsyncThunk('auth/reset_password', async ({data, action}:{data:{password:string , password_confirmation: string}, action?: () => void}, {dispatch}) => {
+  console.log(data);
    
 })
 
 
 type State = {
   loading: boolean;
+  token: string | null;
   checkResetTokenLoading: boolean; 
   error: any
 } 
 
 const initialState:State = {
   loading: false,
+  token: null,
   checkResetTokenLoading: true,
   error: null
 }
@@ -53,8 +69,9 @@ const authSlice = createSlice({
     builder.addCase(signIn.pending, state => {
       state.loading = true
     })
-    builder.addCase(signIn.fulfilled, state => {
-      state.loading = false
+    builder.addCase(signIn.fulfilled, (state, {payload}) => {
+      state.loading = false;
+      state.token = payload.token
     })
     builder.addCase(signIn.rejected, (state, {payload}:any) => {
       state.loading = false;

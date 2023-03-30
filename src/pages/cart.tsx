@@ -1,19 +1,20 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect } from 'react';
 
 import classNames from 'classnames';
 import useLocalStorage from 'use-local-storage';
 
 import { closeModal } from '@dokkan/api/modalSlice';
+import { setCheckoutStep } from '@dokkan/api/userSlice';
 import Button from '@dokkan/components/Button';
 import {
   CartStep,
   DetailsStep,
   PaymentStep,
 } from '@dokkan/components/Cart/CheckoutSteps';
-import { useAppDispatch } from '@dokkan/store';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@dokkan/store';
 
 const steps = {
   cart: CartStep,
@@ -23,15 +24,19 @@ const steps = {
 function Cart() {
   const dispatch = useAppDispatch();
   const [localStep, setLocalStep] = useLocalStorage('step', 'cart')
-  const [step, setStep] = useState('');
+  // const [step, setStep] = useState('');
+  const step = useAppSelector(state => state.user.checkoutStep)
 
   const handleStepClick = (step:string) => {
-    setStep(step)
+    // setStep(step)
+    dispatch(setCheckoutStep(step))
     setLocalStep(step)
   }
-
+  console.log(localStep);
+  
   useEffect(() => {
-    setStep(localStep);
+    // setStep(localStep || 'cart');
+    dispatch(setCheckoutStep(localStep || 'cart'))
     dispatch(closeModal())
   },[])
   
@@ -52,11 +57,21 @@ function Cart() {
         })}
       </div>
       
-      {step && <Step setStep={(step) => {setStep(step); setLocalStep(step)}}/>}  
+      {step && <Step setStep={(step) => {dispatch(setCheckoutStep(step)); setLocalStep(step)}}/>}  
       
     </div>
    </div>
   )
 }
+
+
+// @ts-ignore
+// export const getServerSideProps = wrapper.getServerSideProps(store => async args => {
+//   const {dispatch, getState} = store
+//   if (!getState().user.userInfo.name ||!getState().app.template) {
+//     await Promise.all([dispatch(getUser()), dispatch(getAppConfig())])
+//   }
+
+// }) 
 
 export default Cart

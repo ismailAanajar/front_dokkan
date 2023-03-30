@@ -23,14 +23,13 @@ export const errorHandling = ({error, setError}:Error) => {
 }
 
 export const rules = (fields : Field[]) => {
-  console.log({fields});
   
   return fields.reduce((acc:any,curr:Field) => {
     if (curr.type === 'text' || curr.type === 'password') {
-      acc[curr.name] = curr.require ?  z.string() : z.string().optional()
+      acc[curr.name] = curr.require ?  z.string().min(3) : z.string().optional()
     }
     else if (curr.type === 'number') {
-      acc[curr.name] = curr.require ?  z.string() : z.string().optional()
+      acc[curr.name] = curr.require ?  z.number() : z.string().optional()
     }
     else if  (curr.type === 'email') {
       acc[curr.name] = curr.require ?  z.string().email() : z.string().email().optional()
@@ -45,3 +44,4 @@ export const rules = (fields : Field[]) => {
     
   },{})
 }
+
