@@ -11,6 +11,7 @@ import {
 } from '@dokkan/store';
 import {
   errorHandling,
+  resetForm,
   rules,
 } from '@dokkan/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,15 +30,15 @@ const countries = [
   },
 ]
 
-function AddressType({type}: {type: 'shipping' | 'belling'}) {
+function AddressType({type, values, action}: {type: 'shipping' | 'belling', values?: Field[], action?: 'create' | 'update'}) {
   const dispatch = useAppDispatch()
   const {addresses} = useAppSelector<{addresses:{ shipping: Field[], belling: Field[] }}>(state => state.app.forms)
   const {loading, error} = useAppSelector(state => state.address)
   
  const schema = z.object(rules(addresses[type]));
 
-  const {control, handleSubmit, setError } = useForm({resolver: zodResolver(schema)})
- const onSubmit = (data:any) => {dispatch(addAddress({type, data}))} ;
+  const {control, handleSubmit, setError, reset } = useForm({resolver: zodResolver(schema)})
+ const onSubmit = (data:any) => {dispatch(addAddress({type, data, action}))} ;
 
   
   
@@ -48,6 +49,10 @@ function AddressType({type}: {type: 'shipping' | 'belling'}) {
       errorHandling({error, setError})
     }
   }, [error])
+
+   useEffect(() => {
+     reset(resetForm(values || addresses[type])); 
+  }, [type])
 
   
   return (

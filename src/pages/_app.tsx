@@ -63,9 +63,11 @@ type CustomAppProps = AppProps & {
     <>
       <Loader loading={isLoading} init/> 
       <LazyMotion features={domAnimation}>
-        <div className={`${inter.variable} font-sans`}>
+        <div className={`${inter.variable} font-sans flex flex-col min-h-screen`}>
           <Header/>
-          <Component {...pageProps} />   
+          <div className='flex-grow'>
+            <Component {...pageProps} />
+           </div>   
           <Footer/>   
         <Modal/>
         </div>

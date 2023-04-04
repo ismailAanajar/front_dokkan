@@ -16,16 +16,50 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
             {
               id: 1,
               number: 20230001,
-              status: 'pending',
+              status: 'dispatched',
               created_at: '11/5/2022',
               total: 135,
+              payment_method: 'vida card',
               products: [
                 {
                   id: 1,
                   title: 'product product product 1',
-                  image: require('@dokkan/assets/images/product9.jpg').default.src
-                }
-              ]
+                  image: require('@dokkan/assets/images/product9.jpg').default.src,
+                  quantity: 12,
+                  price: 10
+                },
+                {
+                  id: 2,
+                  title: 'product product product 1',
+                  image: require('@dokkan/assets/images/product9.jpg').default.src,
+                  quantity: 12,
+                  price: 10
+                },
+              ],
+              address: {
+                shipping: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+                belling: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+              }
             },
             {
               id: 2,
@@ -33,27 +67,81 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
               status: 'pending',
               created_at: '11/5/2022',
               total: 135,
+              payment_method: 'score',
               products: [
                 {
                   id: 1,
                   title: 'product product product 1',
-                  image: require('@dokkan/assets/images/product9.jpg').default.src
+                  image: require('@dokkan/assets/images/product9.jpg').default.src,
+                  quantity: 22,
+                  price: 220
                 }
-              ]
+              ],
+              address: {
+                shipping: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+                belling: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+              }
             },
             {
               id: 3,
               number: 20230331,
-              status: 'pending',
+              status: 'delivered',
               created_at: '11/5/2022',
               total: 135,
+              payment_method: 'vida card',
               products: [
                 {
                   id: 1,
                   title: 'product product product 1',
-                  image: require('@dokkan/assets/images/product9.jpg').default.src
+                  image: require('@dokkan/assets/images/product9.jpg').default.src,
+                  quantity: 2,
+                  price: 120
                 }
-              ]
+              ],
+              address: {
+                shipping: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+                belling: {
+                  id:1,
+                  first_name: 'ismail',
+                  last_name: 'anajar',
+                  email: 'ismail@gmail.com',
+                  phone: '5448424132',
+                  country: 'morocco',
+                  city: 'agadir',
+                  postal_code: 45455,
+                  isPrimary: false
+                },
+              }
             },
           ],
           addresses: {
@@ -64,9 +152,10 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
                 last_name: 'anajar',
                 email: 'ismail@gmail.com',
                 phone: '5448424132',
-                country: 'morocco',
+                country: 'country1',
                 city: 'agadir',
                 postal_code: 45455,
+                address_1: 'address1',
                 isPrimary: false
               },
               {
@@ -78,6 +167,7 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
                 country: 'morocco',
                 city: 'agadir',
                 postal_code: 45455,
+                address_1: 'address1',
                 isPrimary: true
               },
               {
@@ -89,6 +179,7 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
                 country: 'morocco',
                 city: 'agadir',
                 postal_code: 45455,
+                address_1: 'address1',
                 isPrimary: false
               },
             ],
@@ -107,7 +198,7 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
             ]
           }
         })
-      }, 3000);
+      }, 3000);   
     })
 
    return data as UserInfo; 

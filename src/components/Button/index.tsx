@@ -27,7 +27,7 @@ const Button = ({href, variant, children, className, loading, ...rest}:PropsWith
     },
     className
   )
-  const button = href ? <Link href={href} className='block py-2 px-4'>{children}</Link>: children
+  const button = href ? <Link href={href} >{children}</Link>: children
   return (
     <button  className={classes} {...rest}>
       {button}

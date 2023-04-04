@@ -162,21 +162,21 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
                       },
                       {
                         id:7,
-                        label: 'zip',
-                        name: 'zip',
-                        type: 'text',
+                        label: 'postal_code',
+                        name: 'postal_code',
+                        type: 'number',
                         require: true
                       },
                       {
                         id:8,
                         label: 'address 1',
-                        name: 'address-1',
+                        name: 'address_1',
                         type: 'text',
                       },
                       {
                         id:9,
                         label: 'address 2',
-                        name: 'address-2',
+                        name: 'address_2',
                         type: 'text',
                         require: true
                       },
@@ -226,9 +226,9 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
                       },
                       {
                         id:7,
-                        label: 'zip',
-                        name: 'zip',
-                        type: 'text',
+                        label: 'postal_code',
+                        name: 'postal_code',
+                        type: 'number',
                         require: true
                       },
                       {

@@ -2,14 +2,7 @@ import React from 'react';
 
 import { Section } from '@dokkan/components';
 import ProfileLayout from '@dokkan/components/Layouts/ProfileLayout';
-import {
-  Account,
-  Addresses,
-  Orders,
-  Wishlist,
-} from '@dokkan/components/Profile';
-
-const panels = [Orders, Wishlist, Addresses, Account]
+import withAuth from '@dokkan/utils/withAuth';
 
 function profile() {
   return (
@@ -21,4 +14,4 @@ function profile() {
   )
 }
 
-export default profile
+export default withAuth(profile)

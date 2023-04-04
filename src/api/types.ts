@@ -8,6 +8,7 @@ export type Address = {
   phone: string;
   country: string;
   city: string;
+  street: string;
   postal_code: number;
   isPrimary: boolean
 }
@@ -26,12 +27,13 @@ export type UserInfo =  {
 }
 
 export type Field = {
-  id:number,
-  label: string,
+  id?:number,
+  label?: string,
   name: string,
-  type: string,
-  require: boolean,
-  icon?: IconK
+  type?: string,
+  require?: boolean,
+  icon?: IconK,
+  value?: any
 
 }
 
@@ -41,15 +43,23 @@ export type Field = {
 export type Order = {
   id: number;
   number: number;
-  status: 'pending' | 'processing' | 'complete' | 'failed',
+  status: 'pending' | 'processing' | 'delivered' | 'failed' | 'dispatched',
   created_at: string;
   total: number;
+  payment_method: string;
 
   products: {
     id: number;
     title: string;
     image: string;
+    quantity: number;
+    price: number
   }[]
+
+  address: {
+    shipping: Address;
+    belling: Address;
+  }
 }  
 
 // export type User = {
