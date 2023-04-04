@@ -4,6 +4,7 @@ import { Order } from '@dokkan/api/types';
 import { Icons } from '@dokkan/assets/icons';
 import ProfileLayout from '@dokkan/components/Layouts/ProfileLayout';
 import { useAppSelector } from '@dokkan/store';
+import withAuth from '@dokkan/utils/withAuth';
 
 function Orders() {
   const orders = useAppSelector<Order[]>(state => state.user.userInfo.orders)
@@ -30,4 +31,4 @@ function Orders() {
       )
 }
 
-export default Orders
+export default withAuth(Orders)

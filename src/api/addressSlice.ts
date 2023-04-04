@@ -3,8 +3,8 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-export const addAddress = createAsyncThunk('add-address', async ({type, data}:{type: 'shipping' | 'belling', data: any}, {rejectWithValue}) => {
-  console.log({type, data});
+export const addAddress = createAsyncThunk('add-address', async ({type, data, action}:{type: 'shipping' | 'belling', data: any, action?: 'create' | 'update'}, {rejectWithValue}) => {
+  console.log({type, data, action});
   
 })
 export const setAddressAsPrimary = createAsyncThunk('set-address-as-primary', async (id:number, {rejectWithValue}) => {

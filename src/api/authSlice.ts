@@ -5,13 +5,12 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-export const signIn = createAsyncThunk('auth/singIn', async ({data, action}:{data:{email:string, password: string, remember:boolean}, action?: string}, {dispatch, rejectWithValue}) => {
+export const signIn = createAsyncThunk('auth/singIn', async ({data }:{data:{email:string, password: string, remember:boolean}}, {dispatch, rejectWithValue}) => {
  try {
+  console.log(data);
+  
    
-  if (action) {
-    eval(action)()
-  }
-  console.log({data, action});
+  
   dispatch(closeModal())  
   dispatch(setCheckoutStep('details'))  
  } catch (error) {
@@ -50,7 +49,7 @@ type State = {
   loading: boolean;
   token: string | null;
   checkResetTokenLoading: boolean; 
-  error: any
+  error: any;
 } 
 
 const initialState:State = {

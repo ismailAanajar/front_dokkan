@@ -21,7 +21,8 @@ type Props = {
   control: Control;
   icon?: IconK;
   label?: string;
-  className?: string
+  className?: string;
+  value?: string | number | boolean | undefined;
   options?:  {
     value: string | number;
     label: string | number;
@@ -38,6 +39,7 @@ const FormGroup = (props: Props) => {
     case 'email':
     case 'password':
     case 'text':
+    case 'number':
       field = <Input {...rest}/>
       break;
     case 'checkbox':

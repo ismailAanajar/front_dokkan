@@ -60,7 +60,7 @@ function Modal() {
   const {isOpen, content} = useSelector((state:RootState) => state.modal)
   const dispatch = useDispatch()
  
-  let Component: ComponentType<{productId: number, type: "register" | "login" | "forget" | "reset" | 0 | 1, action: any}> | undefined
+  let Component: ComponentType<{productId: number, type: "register" | "login" | "forget" | "reset" | 0 | 1, from: string}> | undefined
   if (content?.comp) {
     const SelectedComponent  = components[content.comp as keyof typeof components];
     if (SelectedComponent) {

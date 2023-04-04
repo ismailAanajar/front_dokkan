@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -18,6 +19,7 @@ import {
 } from '@dokkan/store';
 import {
   errorHandling,
+  resetForm,
   rules,
 } from '@dokkan/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,23 +40,25 @@ const orActions = {
   forget: 'login'
 } 
 
-function AuthType({type, action}: {type: 'register' | 'login' | 'forget' | 'reset', action: string}) {
+function AuthType({type, action, from}: {type: 'register' | 'login' | 'forget' | 'reset', action: string, from?: string}) {
   const forms = useAppSelector(state => state.app.forms)
   
   const schema = z.object(rules(forms[type]));
   
+
   const {control, handleSubmit, setError, reset } = useForm({resolver: zodResolver(schema)})
   const dispatch = useAppDispatch();
   const {setStep} = useLocalStorage()
-  const {loading, error, token} = useAppSelector(state => state.auth)
+  const {loading, error, token} = useAppSelector(state => state.auth);
+  const {replace} = useRouter()
+
+
+
   
   // @ts-ignore
- const onSubmit = (data:any) => dispatch(actions[type]({data:data, action}))  ;
+ const onSubmit = (data:any) => dispatch(actions[type]({data:data}))  ;
   useEffect(() => {
-     reset(forms[type].reduce((acc:any, curr:any) => {
-      acc[curr.name] = ''
-      return acc
-     },{})); 
+     reset(resetForm(forms[type])); 
   }, [type])
   useEffect(() => {
     if (error?.errors) {
@@ -66,6 +70,9 @@ function AuthType({type, action}: {type: 'register' | 'login' | 'forget' | 'rese
   useEffect(() => {
     if (token) {
       setStep('details')
+    }
+    if (token && from) {
+      replace(from)
     }
   },[token])
 
