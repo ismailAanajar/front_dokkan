@@ -10,8 +10,59 @@ export const getUser = createAsyncThunk('getUser', async (_,{rejectWithValue}) =
       setTimeout(() => {
         resolve({
           name: 'ismail anajar',
-          cart: [],
-          wishlist: [],
+          cart: [
+            {
+              id: 4,
+              image: require('@dokkan/assets/images/product7.jpg').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 120,
+              rating: 1,
+              reviewsNumber: 2
+            },
+            {
+              id: 5,
+              image: require('@dokkan/assets/images/product9.jpg').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 67,
+              rating: 2,
+              reviewsNumber: 12
+            },
+            {
+              id: 6,
+              image: require('@dokkan/assets/images/product4.webp').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 67,
+              rating: 2,
+              reviewsNumber: 12
+            },
+          ],
+          wishlist: [
+            {
+              id: 1,
+              image: require('@dokkan/assets/images/product8.jpg').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 67,
+              rating: 2,
+              reviewsNumber: 12
+            },
+            {
+              id: 2,
+              image: require('@dokkan/assets/images/product5.jpg').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 260,
+              rating: 5,
+              reviewsNumber: 55
+            },
+            {
+              id: 3,
+              image: require('@dokkan/assets/images/product6.jpg').default.src,
+              title: 'Xiaomi Poco M4 pro 5G',
+              price: 55,
+              rating: 3,
+              reviewsNumber: 12
+            },
+        
+          ],
           orders: [
             {
               id: 1,

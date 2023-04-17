@@ -4,3 +4,4 @@ export { default as auth } from './authSlice';
 export { default as review } from './reviewSlice';
 export { default as app } from './appSlice';
 export { default as address } from './addressSlice';
+export { default as product } from './productSlice';

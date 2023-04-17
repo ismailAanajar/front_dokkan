@@ -13,7 +13,7 @@ const socialIcons = {
   twitter: <Icons.Twitter/>,
   youtube: <Icons.Youtube/>,
 }
-const social = {
+  const social = {
   facebook: {
     visible: true,
     url: '#'
@@ -76,10 +76,13 @@ const links = [
   },
 ]
 
+
 const Footer = () => {
 
   return (
-    <div className='bg-secondary text-white'>
+
+  <div className='bg-secondary text-white'>
+    
       <div className="news_letter bg-primary ">
         <div className="container  md:flex justify-between items-center py-9 gap-10">
           <div>

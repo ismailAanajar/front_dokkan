@@ -38,6 +38,14 @@ export type Field = {
 }
 
 
+export type Product = {
+  id: number;
+  image: string;
+  title: string;
+  price: number;
+  rating:number;
+  reviewsNumber: number;
+}
 
 
 export type Order = {

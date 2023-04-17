@@ -17,7 +17,7 @@ function ProfileLayout({children, page, title}: PropsWithChildren<{page: string,
           <Image className='rounded-full mx-auto' alt='' width={200} height={200} src={require('@dokkan/assets/images/user.jpg')} />
           <div className="flex justify-between gap-3 items-center mt-2">
             <strong>1520pt</strong>
-            <Button variant='link' className='shadow-none text-sm bg-primary_light !px-1 !py-1'>logout</Button>
+            <Button variant='link' className='shadow-none text-xs  bg-primary_light !px-2 !py-1'>logout</Button>
           </div>
         </div>
         <div className=' p-3 flex flex-col gap-3 bg-white shadow-sm'>

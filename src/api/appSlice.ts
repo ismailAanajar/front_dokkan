@@ -6,17 +6,23 @@ import {
 type State = {
   loading: boolean;
   template: any;
-  forms: any
+  forms: any;
+  translate: any
 }
 
-export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithValue}) => {
-   const data = new Promise(resolve => {
+export const getAppConfig = createAsyncThunk('appConfig', async ({locale}: {locale?:string},{rejectWithValue}) => {
+  // const {locale:l} = useRouter();
+  const data = new Promise(resolve => {
+    
+      const translate = locale === 'fr' ? {name: "ismail fr"} : {name: "ismail zn"}
       setTimeout(() => {
+
         resolve({ template: {
             '--color-primary': '#ff1d52',
             '--color-primary-light': '#ffe1e6',
             '--color-secondary': '#0f3460',
           },
+          translate,
           forms: {
             login: [
                   {
@@ -251,7 +257,8 @@ export const getAppConfig = createAsyncThunk('appConfig', async (_,{rejectWithVa
 const initialState: State = {
   loading: false,
   template: null,
-  forms: null
+  forms: null,
+  translate: null
 }
 
 const appSlice = createSlice({
@@ -271,6 +278,7 @@ const appSlice = createSlice({
         
         state.template = payload.template
         state.forms = payload.forms
+        state.translate = payload.translate
       })
       // .addCase(getAppConfig.rejected, (state, action) => {
       //   state.loading = false

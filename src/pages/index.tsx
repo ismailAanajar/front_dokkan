@@ -1,22 +1,26 @@
-import { useEffect } from 'react';
-
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-
-import { checkResetToken } from '@dokkan/api/authSlice';
-import { openModal } from '@dokkan/api/modalSlice';
 import {
   Product,
   Section,
 } from '@dokkan/components';
-import Carousel from '@dokkan/components/Carousel';
-import Banner from '@dokkan/components/Carousel/Slides/Banner';
-import Category from '@dokkan/components/Carousel/Slides/Category';
-import Offer from '@dokkan/components/Offer';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@dokkan/store';
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+
+import Banner from '@dokkan/components/Carousel/Slides/Banner';
+import Carousel from '@dokkan/components/Carousel';
+import Category from '@dokkan/components/Carousel/Slides/Category';
+import Head from 'next/head';
+import Offer from '@dokkan/components/Offer';
+import { checkResetToken } from '@dokkan/api/authSlice';
+import { openModal } from '@dokkan/api/modalSlice';
+import parser from 'html-react-parser';
+import { useRouter } from 'next/router';
 
 // import { Scrollbar } from 'swiper';
 
@@ -300,7 +304,20 @@ export default function Home() {
     }
   ]
 
-  
+  // const { t } = useTranslation('common');
+  const  {locale, events}  = useRouter()
+
+  const t = useAppSelector(state => state.app.translate)
+ const [, updateState] = useState({});
+ const forceUpdate = useCallback(() => updateState({}), []);
+ const [key, setKey] = useState(false);
+//  const handleComplete = () => {
+//    setKey(Date.now());
+//   };
+  // Router.events.on('routeChangeComplete', handleComplete)
+  useEffect(()=>{
+    setKey(true)
+  },[])
   return (
     <>
       <Head>
@@ -309,10 +326,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content="My Website"/>
-    <meta property="og:description" content="Check out my cool website!"/>
-    <meta property="og:image" content="{dynamic-image-url}"/>
+          <meta property="og:description" content="Check out my cool website!"/>
+          <meta property="og:image" content="{dynamic-image-url}"/>
       </Head>
-      <main>
+      <main >
         {/* <Script
           id="content-js"
           strategy="afterInteractive"
@@ -352,12 +369,12 @@ export default function Home() {
               }
             })
           }
-          
         </div>
       </main>
     </>
   )
 }
+
 
 // @ts-ignore
 // export const getServerSideProps = wrapper.getServerSideProps(store => async args => {
