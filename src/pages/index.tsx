@@ -1,27 +1,26 @@
 import {
+  Product,
+  Section,
+} from '@dokkan/components';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@dokkan/store';
+import {
   useCallback,
   useEffect,
   useState,
 } from 'react';
 
-import parser from 'html-react-parser';
+import Banner from '@dokkan/components/Carousel/Slides/Banner';
+import Carousel from '@dokkan/components/Carousel';
+import Category from '@dokkan/components/Carousel/Slides/Category';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-
+import Offer from '@dokkan/components/Offer';
 import { checkResetToken } from '@dokkan/api/authSlice';
 import { openModal } from '@dokkan/api/modalSlice';
-import {
-  Product,
-  Section,
-} from '@dokkan/components';
-import Carousel from '@dokkan/components/Carousel';
-import Banner from '@dokkan/components/Carousel/Slides/Banner';
-import Category from '@dokkan/components/Carousel/Slides/Category';
-import Offer from '@dokkan/components/Offer';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@dokkan/store';
+import parser from 'html-react-parser';
+import { useRouter } from 'next/router';
 
 // import { Scrollbar } from 'swiper';
 
@@ -370,76 +369,12 @@ export default function Home() {
               }
             })
           }
-          <h1>{t?.["name"]}</h1>
-          <h2>{locale}</h2>
-           {/* {key && locale  !== 'fr' && parser(`<script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
-                    <script>
-                    setTimeout(() => {
-                      hbspt.forms.create({
-                        region: "eu1",
-                        portalId: "26514113",
-                        formId: "81b83442-5d97-466d-96c3-8b249b9728a0",
-                        target: "#test"
-                      });
-                    }, 10000);
-                    </script>` )}  */}
-                    
-          {/* <div id="test"></div> */}
-          {locale !== 'fr' && <MyComponent/>}
         </div>
       </main>
     </>
   )
 }
 
-function MyComponent() {
-  const {locale} = useRouter()
-  if (!locale) {
-    return
-  }
-  let script:HTMLScriptElement ;
-  useEffect(() => {
-    let p = parser(`<script>console.log('heyyyyyyyyyyy')</script><script>console.log('ismaiiiiiiiiiiiiiiiiiiiiiiiil')</script>` )
-    if (typeof p === 'string') {
-      return
-    }
-    if (!Array.isArray(p) ) {
-      p= [p]
-    }
-    
-    
-
-                    p?.map(item => {
-                      if (item.props?.src) {
-                        script =  document.createElement('script');
-                        script.setAttribute('charset', item.props?.charSet);
-                        script.setAttribute('type', item.props?.type);
-                        script.setAttribute('src', item.props?.src);
-                        document.body.appendChild(script);
-                      }
-                      else if(item.props?.dangerouslySetInnerHTML?.__html) {
-                        script?.addEventListener('load', () => {
-                          const x =  document.createElement('script');
-                          x.innerHTML = item.props?.dangerouslySetInnerHTML?.__html
-                          document.getElementById('test')?.appendChild(x)
-                        });
-                        if (!script) {
-                          const x =  document.createElement('script');
-                          x.innerHTML = item.props?.dangerouslySetInnerHTML?.__html
-                          document.getElementById('test')?.appendChild(x)
-                        }
-                        
-                      }
-                    })
-    
-
-    return () => {
-      // document.body.removeChild(script);
-    };
-
-  }, [locale]);
-  return <div id="test"></div>;
-}
 
 // @ts-ignore
 // export const getServerSideProps = wrapper.getServerSideProps(store => async args => {
