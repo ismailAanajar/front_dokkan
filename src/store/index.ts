@@ -13,6 +13,7 @@ import {
   app,
   auth,
   modal,
+  product,
   review,
   user,
 } from '@dokkan/api';
@@ -30,7 +31,8 @@ const combinedReducer = combineReducers({
   modal,
   review,
   user,
-  address
+  address,
+  product
 });
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {
   if (action.type === HYDRATE) {

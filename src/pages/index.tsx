@@ -1,5 +1,10 @@
-import { useEffect } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
+import parser from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -300,7 +305,20 @@ export default function Home() {
     }
   ]
 
-  
+  // const { t } = useTranslation('common');
+  const  {locale, events}  = useRouter()
+
+  const t = useAppSelector(state => state.app.translate)
+ const [, updateState] = useState({});
+ const forceUpdate = useCallback(() => updateState({}), []);
+ const [key, setKey] = useState(false);
+//  const handleComplete = () => {
+//    setKey(Date.now());
+//   };
+  // Router.events.on('routeChangeComplete', handleComplete)
+  useEffect(()=>{
+    setKey(true)
+  },[])
   return (
     <>
       <Head>
@@ -309,10 +327,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content="My Website"/>
-    <meta property="og:description" content="Check out my cool website!"/>
-    <meta property="og:image" content="{dynamic-image-url}"/>
+          <meta property="og:description" content="Check out my cool website!"/>
+          <meta property="og:image" content="{dynamic-image-url}"/>
       </Head>
-      <main>
+      <main >
         {/* <Script
           id="content-js"
           strategy="afterInteractive"
@@ -352,11 +370,75 @@ export default function Home() {
               }
             })
           }
-          
+          <h1>{t?.["name"]}</h1>
+          <h2>{locale}</h2>
+           {/* {key && locale  !== 'fr' && parser(`<script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
+                    <script>
+                    setTimeout(() => {
+                      hbspt.forms.create({
+                        region: "eu1",
+                        portalId: "26514113",
+                        formId: "81b83442-5d97-466d-96c3-8b249b9728a0",
+                        target: "#test"
+                      });
+                    }, 10000);
+                    </script>` )}  */}
+                    
+          {/* <div id="test"></div> */}
+          {locale !== 'fr' && <MyComponent/>}
         </div>
       </main>
     </>
   )
+}
+
+function MyComponent() {
+  const {locale} = useRouter()
+  if (!locale) {
+    return
+  }
+  let script:HTMLScriptElement ;
+  useEffect(() => {
+    let p = parser(`<script>console.log('heyyyyyyyyyyy')</script><script>console.log('ismaiiiiiiiiiiiiiiiiiiiiiiiil')</script>` )
+    if (typeof p === 'string') {
+      return
+    }
+    if (!Array.isArray(p) ) {
+      p= [p]
+    }
+    
+    
+
+                    p?.map(item => {
+                      if (item.props?.src) {
+                        script =  document.createElement('script');
+                        script.setAttribute('charset', item.props?.charSet);
+                        script.setAttribute('type', item.props?.type);
+                        script.setAttribute('src', item.props?.src);
+                        document.body.appendChild(script);
+                      }
+                      else if(item.props?.dangerouslySetInnerHTML?.__html) {
+                        script?.addEventListener('load', () => {
+                          const x =  document.createElement('script');
+                          x.innerHTML = item.props?.dangerouslySetInnerHTML?.__html
+                          document.getElementById('test')?.appendChild(x)
+                        });
+                        if (!script) {
+                          const x =  document.createElement('script');
+                          x.innerHTML = item.props?.dangerouslySetInnerHTML?.__html
+                          document.getElementById('test')?.appendChild(x)
+                        }
+                        
+                      }
+                    })
+    
+
+    return () => {
+      // document.body.removeChild(script);
+    };
+
+  }, [locale]);
+  return <div id="test"></div>;
 }
 
 // @ts-ignore

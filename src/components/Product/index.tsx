@@ -2,24 +2,22 @@ import Image from 'next/image';
 import Rating from 'react-rating';
 
 import { openModal } from '@dokkan/api/modalSlice';
+import { Product as ProductType } from '@dokkan/api/types';
 import { Icons } from '@dokkan/assets/icons';
 import { useAppDispatch } from '@dokkan/store';
 
 import Button from '../Button';
 
-type Props = {
-  id: number;
-  image: string;
-  title: string;
-  price: number;
-  rating: number;
-  reviewsNumber: number 
+type Props = ProductType & {
+  wishlist?: boolean;
 }
 
-function Product({id,image, title, price, rating, reviewsNumber}: Props) {
+function Product({id,image, title, price, rating, reviewsNumber, wishlist}: Props) {
+  // const [first, setfirst] = useState(second)
   const dispatch = useAppDispatch()
   return (
-    <div className='bg-white shadow-lg p-3 mb-4'>
+    <div className='bg-white shadow-md p-3 mb-4 rounded-sm relative'>
+      {wishlist && <Icons.CloseMenu className='absolute top-0 right-0 bg-primary_light text-primary p-1 w-6 h-6 cursor-pointer'/>}
       <div className="relative h-[170px]">
         <Image src={image} fill  alt='product' style={{ objectFit: 'contain' }} className='mx-auto'/>
       </div>
@@ -39,7 +37,7 @@ function Product({id,image, title, price, rating, reviewsNumber}: Props) {
           </div>
         </div>
         <div className='flex justify-between gap-2 pt-2'>
-          <Button variant='outline'  className='p-3 shadow-none flex-grow flex justify-center items-center'><Icons.AddToWishlist className='w-5 h-5  fill-primary'/></Button>
+          {!wishlist && <Button variant='outline'  className='p-3 shadow-none flex-grow flex justify-center items-center'><Icons.AddToWishlist className='w-5 h-5  fill-primary'/></Button>}
           <Button variant='outline' className='p-3 shadow-none flex-grow  flex justify-center items-center'><Icons.AddToCart className='w-7 h-7 fill-primary'/></Button>
         </div>
       </div>
