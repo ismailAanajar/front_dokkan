@@ -79,12 +79,11 @@ type CustomAppProps = AppProps & {
 
 App.getInitialProps = wrapper.getInitialPageProps(store => async ({pathname, req, res}) => {
   const {dispatch, getState } = store
-  // if (!getState().user.userInfo.name || !getState().app.template) {
-    console.log({req, res});
+  if (!getState().user.userInfo.name || !getState().app.template) {
     
     
     await Promise.all([dispatch(getUser()), dispatch(getAppConfig({locale:'hh'}))])
-  // }
+  }
   return {
     
   }
