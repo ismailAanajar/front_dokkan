@@ -10,17 +10,22 @@ export type Address = {
   city: string;
   street: string;
   postal_code: number;
-  isPrimary: boolean
+  isSelected: boolean
 }
 
 export type Addresses = {
   shipping: Address[];
-  belling: Address[];
+  billing: Address[];
 }
 
 export type UserInfo =  {
+  id: number | null;
+  email: string | null;
   name: string;
-  cart: [];
+  first_name: string;
+            last_name: string;
+  image: string;
+  cart: {total: number | null, items:{id:number, quantity:number,product:Product}[] }
   wishlist: [];
   orders: [];
   addresses: Addresses
@@ -41,10 +46,14 @@ export type Field = {
 export type Product = {
   id: number;
   image: string;
-  title: string;
+  name: string;
   price: number;
   rating:number;
   reviewsNumber: number;
+  descript?: string;
+  image_url: string;
+  key?: number;
+  slug: string
 }
 
 
@@ -59,15 +68,18 @@ export type Order = {
   products: {
     id: number;
     title: string;
-    image: string;
-    quantity: number;
-    price: number
+    image_url: string;
+    details: {
+      quantity: number;
+    price: number;
+    name: string; 
+    product_name: string
+    }
   }[]
 
-  address: {
-    shipping: Address;
-    belling: Address;
-  }
+  
+    shipping_addr: Address;
+    billing_addr: Address;
 }  
 
 // export type User = {

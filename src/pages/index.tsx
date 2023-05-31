@@ -1,26 +1,26 @@
+import { useEffect } from 'react';
+
+import axios from 'axios';
+import parse from 'html-react-parser';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 import {
-  Product,
-  Section,
-} from '@dokkan/components';
+  checkResetToken,
+  userActivation,
+} from '@dokkan/api/authSlice';
+import { openModal } from '@dokkan/api/modalSlice';
+import { Product } from '@dokkan/components';
+import Carousel from '@dokkan/components/Carousel';
+import Banner from '@dokkan/components/Carousel/Slides/Banner';
+import Category from '@dokkan/components/Carousel/Slides/Category';
+import Css from '@dokkan/components/Editor/Css';
+import Js from '@dokkan/components/Editor/Js';
+import Offer from '@dokkan/components/Offer';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@dokkan/store';
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-
-import Banner from '@dokkan/components/Carousel/Slides/Banner';
-import Carousel from '@dokkan/components/Carousel';
-import Category from '@dokkan/components/Carousel/Slides/Category';
-import Head from 'next/head';
-import Offer from '@dokkan/components/Offer';
-import { checkResetToken } from '@dokkan/api/authSlice';
-import { openModal } from '@dokkan/api/modalSlice';
-import parser from 'html-react-parser';
-import { useRouter } from 'next/router';
 
 // import { Scrollbar } from 'swiper';
 
@@ -37,8 +37,10 @@ type CategoryProps = {
 
 
 
-export default function Home() {
-  const {query} = useRouter()
+export default function Home({cms}:any) {
+  
+  const router = useRouter()
+  const query = router.query as {reset_password?: string; verify_email?: string,}
   const dispatch = useAppDispatch()
   const {checkResetTokenLoading, error} = useAppSelector(state => state.auth)
   
@@ -57,6 +59,12 @@ export default function Home() {
         else {
           dispatch(openModal({comp: 'auth', props:{type: 'reset'}}))
         }
+      }
+      if (query?.verify_email) {
+         dispatch(userActivation({token: query.verify_email})).then((msg) => {
+          router.replace('/', undefined, { shallow: true });
+          
+        })
       }
   }, [error])
   
@@ -304,20 +312,9 @@ export default function Home() {
     }
   ]
 
-  // const { t } = useTranslation('common');
-  const  {locale, events}  = useRouter()
-
-  const t = useAppSelector(state => state.app.translate)
- const [, updateState] = useState({});
- const forceUpdate = useCallback(() => updateState({}), []);
- const [key, setKey] = useState(false);
-//  const handleComplete = () => {
-//    setKey(Date.now());
-//   };
-  // Router.events.on('routeChangeComplete', handleComplete)
-  useEffect(()=>{
-    setKey(true)
-  },[])
+  console.log(cms);
+  
+ 
   return (
     <>
       <Head>
@@ -341,8 +338,41 @@ export default function Home() {
 
         <Carousel data={data} options={bannerOptions}/>
        
-        <div className='blocks'>
+        <div className='flex flex-wrap gap-3 container my-8'>
           {
+            cms.map((item:any) => {
+              switch (item.name) {
+                case 'link_image':
+                case 'text_image':
+                  return <Offer {...item}/>
+                case 'custom_html':
+                  
+                  return (
+                    <div className="" style={{ width: item.width + '%' }}>
+                      {parse(item.html)}
+                    </div>
+                  )
+                case 'products carousel':
+                  
+                  return <div className='py-8' style={{ width: '100%' }}>
+                     {item.title && <h2 className='text-2xl font-bold text-center'>{item.title}</h2>} 
+                     {item.title && <p className='mb-6 text-center'>{item.sub_title}</p>} 
+                    <Carousel data={{...item, content:item.products, ComponentName:Product,}} options={catalogOptions}/>  
+                    </div> 
+                case 'code_editor':
+                  
+                  return <div className="flex-grow my-10" > 
+                      <Js htmlString={item.js}/>
+                      {<Css cssString={item.css}/>}
+                      {parse(item.html.replace(/<a\b[^>]*href="(.*?)"><\/a>/g, '<Link href="$1"></Link>'))}
+                    </div>
+                  break;         
+                default:
+                  break;
+              }
+            })
+          }
+          {/* {
             HomeCms.map(block => {
               if (block.area === 'promo') {
                 return <div className='container flex flex-wrap gap-4 justify-between'>
@@ -368,7 +398,7 @@ export default function Home() {
                          
               }
             })
-          }
+          } */}
         </div>
       </main>
     </>
@@ -377,8 +407,12 @@ export default function Home() {
 
 
 // @ts-ignore
-// export const getServerSideProps = wrapper.getServerSideProps(store => async args => {
-//   const {dispatch} = store
-//   await Promise.all([dispatch(getUser()), dispatch(getAppConfig())])
-
-// }) 
+export const getServerSideProps = async args => {
+  // const {dispatch} = store
+  const resp = await axios.get('http://localhost:8000/api/v1/cms/home');
+  return {
+    props: {
+      cms: resp.data
+    }
+  }
+} 

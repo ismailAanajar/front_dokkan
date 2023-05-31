@@ -1,50 +1,25 @@
-import useLocalStorage from 'use-local-storage';
+import { useAppSelector } from '@dokkan/store';
 
 import Button from '../Button';
 import Item from './Item';
 
 function Cart() {
 
-  const cart = [
-    {
-      id:1,
-      title: 'Silver High Neck Sweater',
-      price: 120,
-      quantity: 2,
-      image: require('@dokkan/assets/images/product1.png').default.src
-    },
-    {
-      id:2,
-      title: 'Yellow Casual Sweater',
-      price: 50,
-      quantity: 5,
-      image: require('@dokkan/assets/images/product2.png').default.src
-    },
-    {
-      id:31,
-      title: 'Denim Blue Jeans',
-      price: 140,
-      quantity: 1,
-      image: require('@dokkan/assets/images/product3.png').default.src
-    },
-  ]
-
-  // const 
-  const [localStep, setLocalStep] = useLocalStorage('step', '')
+  const cart = useAppSelector(state => state.user.userInfo.cart);
   
   return (
     <div className="bg-white h-screen flex flex-col ">
       <div className='text-lg py-5  border-b border-gray_light p-4'>
-        3 items
+        {cart.items.length} items
       </div>
       <div className='flex-grow'>
         {
-          cart.map(item => <Item key={item.id} {...item}/> )
+          cart.items.map(item => <Item key={item.id} quantity={item.quantity} {...item.product}/> )
         }
       </div>
       <div className="p-4 flex flex-col gap-3">
-        <Button href='/cart'  variant='primary'>checkout now </Button>
-        <Button href='/cart'  variant='link' className='border border-primary'>view cart</Button>
+        {/* <Button href='/cart'  variant='primary' className='my-2'>checkout now </Button> */}
+        <Button href='/cart'  variant='primary' className='block border border-primary !my-5'>view cart</Button>
       </div>
     </div>
   )

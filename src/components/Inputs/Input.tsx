@@ -5,14 +5,14 @@ import {
   useController,
 } from 'react-hook-form';
 
-type Props = {
+export type InputProps = {
   control?: Control
 } & ComponentProps<'input'>
 
-function Input(props: Props) {
+function Input(props: InputProps) {
 
   const {field, fieldState} = useController({
-    name: props.name || '', control: props.control
+    name: props.name || '', control: props?.control
   })
   
   return (

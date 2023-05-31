@@ -3,6 +3,7 @@
 type Template = {
   '--color-primary'?: string | undefined;
   '--color-secondary'?: string;
+  '--color-primary-light'?: string;
 } 
 
 

@@ -1,6 +1,9 @@
 import '@dokkan/styles/globals.css';
 
-import { useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 import {
   domAnimation,
@@ -18,6 +21,7 @@ import Loader from '@dokkan/components/Loader/Loader';
 import Modal from '@dokkan/components/Modal';
 
 import {
+  useAppDispatch,
   useAppSelector,
   wrapper,
 } from '../store';
@@ -40,6 +44,7 @@ type CustomAppProps = AppProps & {
  function App({ Component, pageProps  }: CustomAppProps) {
   const {template}  = useAppSelector(state => state.app)
    const [isLoading, setIsLoading] = useState(false);
+   const [isInitLoading, setIsInitLoading] = useState(true)
 
   const handleStart = () => {
     setIsLoading(true);
@@ -54,15 +59,27 @@ type CustomAppProps = AppProps & {
   Router.events.on('routeChangeError', handleComplete);
 
 
-  if (typeof window !== "undefined") {
-    themeConfig(template);
-  }
+  
+  const name = useAppSelector(state => state.user.userInfo.name)
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!name || !template) {
+      setIsInitLoading(true);
+       Promise.all([dispatch(getUser()), dispatch(getAppConfig({locale:'hh'}))]).then(()=> setIsInitLoading(false))
+    }
+  },[])
+
+  useEffect(() => {
+    if (template) {
+      themeConfig(template);
+    }
+  },[template])
 
   return (
     // <Provider store={store}>
     <>
-      <Loader loading={isLoading} init/> 
-      <LazyMotion features={domAnimation}>
+      <Loader loading={isLoading || isInitLoading } init/> 
+      {!isInitLoading && <LazyMotion features={domAnimation}>
         <div className={`${inter.variable} font-sans flex flex-col min-h-screen`}>
           <Header/>
           <div className='flex-grow'>
@@ -71,22 +88,22 @@ type CustomAppProps = AppProps & {
           <Footer/>   
         <Modal/>
         </div>
-      </LazyMotion>
+      </LazyMotion>}
       </>
     // </Provider>
   )
 }
 
-App.getInitialProps = wrapper.getInitialPageProps(store => async ({pathname, req, res}) => {
-  const {dispatch, getState } = store
-  if (!getState().user.userInfo.name || !getState().app.template) {
+// App.getInitialProps = wrapper.getInitialPageProps(store => async ({}) => {
+//   const {dispatch, getState } = store
+//   // if (!getState().user.userInfo.name || !getState().app.template) {
     
     
-    await Promise.all([dispatch(getUser()), dispatch(getAppConfig({locale:'hh'}))])
-  }
-  return {
+//   //   await Promise.all([dispatch(getUser()), dispatch(getAppConfig({locale:'hh'}))])
+//   // }
+//   return {
     
-  }
-})
+//   }
+// })
 
 export default wrapper.withRedux(App);

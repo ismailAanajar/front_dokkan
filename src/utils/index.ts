@@ -23,9 +23,12 @@ export const errorHandling = ({error, setError}:Error) => {
 }
 
 export const rules = (fields : Field[]) => {
+  {
+    email: z.string().min(5).email()
+  }
   
-  return fields.reduce((acc:any,curr:Field) => {
-    if (curr.type === 'text' || curr.type === 'password') {
+  return fields?.reduce((acc:any,curr:Field) => {
+    if (curr.type === 'text' || curr.type === 'tel' || curr.type === 'password') {
       acc[curr.name] = curr.require ?  z.string().min(3) : z.string().optional()
     }
     else if (curr.type === 'number') {
@@ -47,15 +50,20 @@ export const rules = (fields : Field[]) => {
 }
 
 export const resetForm = (fields: Field[]) => {
-  return fields.reduce((acc:any, curr:any) => {
+  return fields?.reduce((acc:any, curr:any) => {
       acc[curr.name] = curr?.value || ''
       return acc
      },{});
 }
 
 export const subString = (string: string, length: number) => {
-  if (string.length <= length) {
+  if (string?.length <= length) {
     return string;
   }
-  return string.substring(length) + '...'
+  return string?.substring(length) + '...'
 } 
+
+
+export const dateFormat = (dateString:string) => {
+  return new Intl.DateTimeFormat('en-US').format(new Date(dateString))
+}

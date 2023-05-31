@@ -36,10 +36,12 @@ const FormGroup = (props: Props) => {
   let field = null;
 
   switch (props.type) {
+    case 'search':
     case 'email':
     case 'password':
     case 'text':
     case 'number':
+    case 'tel':
       field = <Input {...rest}/>
       break;
     case 'checkbox':
@@ -54,8 +56,9 @@ const FormGroup = (props: Props) => {
     default:
       break;
   }
-
-  const Icon: ComponentType<{className: string}> | undefined | ComponentType<SVGProps<SVGSVGElement>> = icon && Icons[icon]
+  const capIcon = icon && icon?.charAt(0).toUpperCase() + icon.slice(1)
+  //@ts-ignore
+  const Icon: ComponentType<{className: string}> | undefined | ComponentType<SVGProps<SVGSVGElement>> = icon && Icons[capIcon]
 
   return ( 
     <div className={classNames('my-4', className)}>

@@ -30,9 +30,9 @@ const countries = [
   },
 ]
 
-function AddressType({type, values, action}: {type: 'shipping' | 'belling', values?: Field[], action?: 'create' | 'update'}) {
+function AddressType({type, values, action}: {type: 'shipping' | 'billing', values?: Field[], action?: 'create' | 'update'}) {
   const dispatch = useAppDispatch()
-  const {addresses} = useAppSelector<{addresses:{ shipping: Field[], belling: Field[] }}>(state => state.app.forms)
+  const addresses = useAppSelector(state => state.app.forms)
   const {loading, error} = useAppSelector(state => state.address)
   
  const schema = z.object(rules(addresses[type]));

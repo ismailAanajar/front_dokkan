@@ -6,7 +6,7 @@ import ProfileLayout from '@dokkan/components/Layouts/ProfileLayout';
 import withAuth from '@dokkan/utils/withAuth';
 
 function create() {
-  const [type, setType] = useState<'shipping' | 'belling'>('shipping')
+  const [type, setType] = useState<'shipping' | 'billing'>('shipping')
   return (
     <ProfileLayout page='addresses'>
       <ProfileLayout.header>
@@ -14,9 +14,9 @@ function create() {
         <Button variant='link' href='/profile/addresses' className='shadow-none text-primary bg-primary_light !px-3 py-2'>back to address</Button>
       </ProfileLayout.header>
       <div className='bg-white p-3 rounded-sm shadow-sm mt-6'>
-         <select className='px-4 py-2 bg-primary_light text-primary rounded-sm' name="type" title='type' onChange={(e) => setType(e.target.value as 'shipping' | 'belling')}>
+         <select className='px-4 py-2 bg-primary_light text-primary rounded-sm' name="type" title='type' onChange={(e) => setType(e.target.value as 'shipping' | 'billing')}>
           <option value="shipping">Shipping</option>
-          <option value="belling">belling</option>
+          <option value="billing">billing</option>
         </select>
         <AddressType type={type} action='create'/>
       </div>

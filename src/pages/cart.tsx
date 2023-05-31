@@ -50,7 +50,7 @@ function Cart() {
         {Object.keys(steps).map((key, index, arr) => {
           return (
             <div className='flex items-center '>
-              <Button onClick={() =>{index <= arr.indexOf(step) && handleStepClick(key)} } className={classNames('!rounded-full capitalize bg-primary_light text-white', {'!bg-primary': index <= arr.indexOf(step) || key === step, 'cursor-auto':index > arr.indexOf(step)})}>{index + 1}.{key}</Button>
+              <Button onClick={() =>{index <= arr.indexOf(step) && handleStepClick(key)} } className={classNames('!rounded-full capitalize  text-white', {'!bg-primary': index < arr.indexOf(step) , 'border border-primary !bg-transparent !text-primary': index === arr.indexOf(step), 'cursor-auto bg-primary_light':index > arr.indexOf(step)})}>{index + 1}.{key}</Button>
               {index !== arr.length -1   && <div className={classNames('h-1 bg-primary_light w-5', {'!bg-primary': index < arr.indexOf(step)})}></div>}
             </div>
           )
