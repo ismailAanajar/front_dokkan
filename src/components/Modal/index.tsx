@@ -70,7 +70,7 @@ function Modal() {
   }
   if (isOpen && content?.comp === 'cart') {
     return <AnimatePresence>
-        <m.div variants={backdrop} initial='hidden' animate='visible' exit='hidden' className='z-10 backdrop-blur-lg bg-[rgba(0,0,0,.2)] fixed top-0 left-0 w-full h-full' onClick={() => dispatch(closeModal())}>
+        <m.div variants={backdrop} initial='hidden' animate='visible' exit='hidden' className='z-[9999] backdrop-blur-lg bg-[rgba(0,0,0,.2)] fixed top-0 left-0 w-full h-full' onClick={() => dispatch(closeModal())}>
           <m.div variants={cart} className="absolute right-[8px] top-0 max-h-screen  bg-white" onClick={(e) => e.stopPropagation()}>
             {Component && <Component {...content.props}/>}
           </m.div>
@@ -80,11 +80,11 @@ function Modal() {
   
   return (
     <AnimatePresence mode='wait'>
-      {isOpen && <m.div variants={backdrop} initial='hidden' animate='visible' exit='hidden' className="overlay z-10 backdrop-blur-lg bg-[rgba(0,0,0,.2)] fixed top-0 left-0 w-full h-full">
+      {isOpen && <m.div variants={backdrop} initial='hidden' animate='visible' exit='hidden' className="overlay z-[99999999] backdrop-blur-lg bg-[rgba(0,0,0,.2)] fixed top-0 left-0 w-full h-full">
         <button title='close' onClick={() => dispatch(closeModal())} className='text-primary fixed top-4 right-4 bg-white w-8 h-8 flex justify-center items-center rounded-full cursor-pointer'>
           <Icons.CloseMenu/>
         </button>
-        <m.div variants={modal} className="wrapper  w-[95%] lg:w-auto min-w-[30%] max-w-[90vw] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
+        <m.div variants={modal} className=" w-[95%] lg:w-auto min-w-[30%] max-w-[90vw] rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh]  bg-white  scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray overflow-y-scroll">
           <div className="content pt-12  p-8 flex justify-center [&>*]:w-full">
             {Component ? <Component {...content?.props}/> : content?.text}
           </div>

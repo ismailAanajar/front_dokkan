@@ -1,34 +1,78 @@
-import { PropsWithChildren } from 'react';
+import {
+  PropsWithChildren,
+  useCallback,
+} from 'react';
 
 import classNames from 'classnames';
-import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { logout } from '@dokkan/api/authSlice';
+import { clearUser } from '@dokkan/api/userSlice';
+import { Icons } from '@dokkan/assets/icons';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@dokkan/store';
 
 import Button from '../Button';
 import Section from '../Section';
 
-const tabs = [{label:'orders', href: '/profile/orders'}, {label:'wishlist', href: '/profile/wishlist'}, {label:'addresses', href: '/profile/addresses'}, {label:'account', href: '/profile'}]
+const tabs = [
+  {
+    label:'orders',
+     href: '/profile/orders',
+     icon: <Icons.Order />
+  },
+  {
+    label:'invoices',
+     href: '/profile/invoices',
+     icon: <Icons.Order />
+  },
+  {
+    label:'wishlist',
+    href: '/profile/wishlist',
+    icon: <Icons.WhishList/>
+  },
+  {
+    label:'addresses',
+    href: '/profile/addresses',
+    icon: <Icons.Address />
+  }, 
+  {
+    label:'account',
+    href: '/profile',
+    icon: <Icons.User/>
+  }]
+
+
 
 function ProfileLayout({children, page, title}: PropsWithChildren<{page: string, title?: string}>) {
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(state => state.auth.loading)
+  const {replace} = useRouter()
+  const logoutHandler = useCallback(()=>{
+    dispatch(logout()).then(() => {
+      localStorage.removeItem('token');
+      replace('/')
+      dispatch(clearUser())
+    })
+  },[])
+
   return (
    <Section>
      <div className='md:flex gap-3 items-start'>
       <div className='flex flex-col md:w-[25%]'>
-        <div className='bg-white p-3 mb-3 rounded-sm shadow-sm'>
-          <Image className='rounded-full mx-auto' alt='' width={200} height={200} src={require('@dokkan/assets/images/user.jpg')} />
-          <div className="flex justify-between gap-3 items-center mt-2">
-            <strong>1520pt</strong>
-            <Button variant='link' className='shadow-none text-xs  bg-primary_light !px-2 !py-1'>logout</Button>
-          </div>
-        </div>
-        <div className=' p-3 flex flex-col gap-3 bg-white shadow-sm'>
+        <div className='  flex flex-col gap-3 px-3 py-5 bg-white shadow-sm'>
           {
             tabs.map(tab => (
-              <Button href={tab.href} className={classNames('block py-2 px-4 bg-gray_light shadow-none text-gray',{'bg-primary text-white': page === tab.label})}>{tab.label}</Button>
+              <Link href={tab.href} className={classNames('!flex items-center gap-2 py-2 rounded-none px-6 hover:bg-gray_light  shadow-none text-gray text-left',{'border-l-4 border-l-primary text-primary bg-gray_light': page === tab.label})}><span>{tab.icon}</span><span>{tab.label}</span></Link>
             ))
           }
+          <Button loading={loading} variant='outline' onClick={logoutHandler}>Logout</Button>
         </div>
       </div>
-      <div className='flex-grow '>
+      <div className='flex-grow mt-4 md:mt-0'>
         {title && <h2 className='mt-3 md:mt-0 text-2xl font-bold mb-3 capitalize'>{title}</h2>}
         {children}
       </div>

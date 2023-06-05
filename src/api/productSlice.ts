@@ -3,42 +3,69 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
+import customAxios from './';
 import { Product } from './types';
 
-export const getProducts = createAsyncThunk('get-products', async (filter:{category?: number; brand?: string, price_from?: number} | undefined, {rejectWithValue}) => {
-  console.log(filter);
+export const getProducts = createAsyncThunk('get-products', async (filter:{search?: string; category_id?: number; brand_id?: string, price_min?: number, price_max?: number} | undefined, {rejectWithValue}) => {
+  const resp = await customAxios.get('/products', {params:filter})
 
-  return []
+  return resp.data;
   
 })
 export const addReview = createAsyncThunk('add-review', async (data:{productId: number; review: string, rate: number}, {rejectWithValue}) => {
   console.log(data);
   
 })
-export const addToCart = createAsyncThunk('add-to-cart', async (data:{productId: number}, {rejectWithValue}) => {
-  console.log(data);
+export const addToCart = createAsyncThunk('add-to-cart', async ({productId, quantity}:{productId: number, quantity?: number}, {rejectWithValue}) => {
+  try {
+    await customAxios.post('addToCart', {productId, quantity})
+  } catch (error) {
+   rejectWithValue('add cart error') 
+  }
   
 })
-export const removeFromCart = createAsyncThunk('remove-from-cart', async (data:{productId: number}, {rejectWithValue}) => {
-  console.log(data);
+export const updateCart = createAsyncThunk('update-cart', async ({productId, quantity}:{productId: number, quantity?: number}, {rejectWithValue}) => {
+  try {
+    await customAxios.post('updateCart', {productId, quantity})
+  } catch (error) {
+   rejectWithValue('add cart error') 
+  }
   
 })
-export const addToWishlist = createAsyncThunk('add-to-wishlist', async (data:{productId: number}, {rejectWithValue}) => {
-  console.log(data);
+export const removeFromCart = createAsyncThunk('remove-from-cart', async ({productId}:{productId: number}, {rejectWithValue}) => {
+  
   
 })
-export const removeFromWishlist = createAsyncThunk('add-to-wishlist', async (data:{productId: number}, {rejectWithValue}) => {
-  console.log(data);
+export const addToWishlist = createAsyncThunk('add-to-wishlist', async ({productId}:{productId: number}, {rejectWithValue}) => {
+  try {
+    await customAxios.post('addToWishlist', {productId})
+  } catch (error) {
+    rejectWithValue('wishlist err')
+  }
+  
+})
+export const removeFromWishlist = createAsyncThunk('remove-from-wishlist', async ({productId}:{productId: number}, {rejectWithValue}) => {
+  
+  try {
+    await customAxios.post('removeFromWishlist', {productId});
+    return ;
+  } catch (error) {
+    rejectWithValue('remove wishlist')
+  }
   
 })
 
 type State = {
-  products: Product[];
+  data: {
+    products:Product[] | null
+  } ;
   loading: boolean;
   error: any
 }
 const initialState: State = {
-  products: [],
+  data: {
+    products: null
+  },
   loading: false,
   error: null
 }
@@ -53,7 +80,7 @@ const productSlice = createSlice({
     })
     builder.addCase(getProducts.fulfilled, (state, {payload}:any) => {
       state.loading = false;
-      state.products = payload
+      state.data = payload
     })
     builder.addCase(getProducts.rejected, (state, {payload}:any) => {
       state.loading = false;

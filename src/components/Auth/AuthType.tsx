@@ -10,7 +10,10 @@ import {
   signIn,
   signUp,
 } from '@dokkan/api/authSlice';
-import { openModal } from '@dokkan/api/modalSlice';
+import {
+  closeModal,
+  openModal,
+} from '@dokkan/api/modalSlice';
 import { Field } from '@dokkan/api/types';
 import { useLocalStorage } from '@dokkan/hooks';
 import {
@@ -37,19 +40,20 @@ const orActions = {
   register: 'login',
   login: 'register',
   reset: 'login',
-  forget: 'login'
+  forgot: 'login'
 } 
 
-function AuthType({type, action, from}: {type: 'register' | 'login' | 'forget' | 'reset', action: string, from?: string}) {
+function AuthType({type, action, from}: {type: 'register' | 'login' | 'forgot' | 'reset', action: string, from?: string}) {
   const forms = useAppSelector(state => state.app.forms)
   
-  const schema = z.object(rules(forms[type]));
   
+  const schema = z.object(rules(forms?.[type]));
+ 
 
   const {control, handleSubmit, setError, reset } = useForm({resolver: zodResolver(schema)})
   const dispatch = useAppDispatch();
   const {setStep} = useLocalStorage()
-  const {loading, error, token} = useAppSelector(state => state.auth);
+  const {loading, error, token, hadRegister} = useAppSelector(state => state.auth);
   const {replace} = useRouter()
 
 
@@ -58,8 +62,9 @@ function AuthType({type, action, from}: {type: 'register' | 'login' | 'forget' |
   // @ts-ignore
  const onSubmit = (data:any) => dispatch(actions[type]({data:data}))  ;
   useEffect(() => {
-     reset(resetForm(forms[type])); 
+     reset(resetForm(forms?.[type])); 
   }, [type])
+
   useEffect(() => {
     if (error?.errors) {
       
@@ -70,17 +75,25 @@ function AuthType({type, action, from}: {type: 'register' | 'login' | 'forget' |
   useEffect(() => {
     if (token) {
       setStep('details')
+      dispatch(closeModal());
     }
+    
     if (token && from) {
       replace(from)
     }
-  },[token])
+  },[token, from])
+
+  useEffect(() => {
+    if (hadRegister) {
+      dispatch(openModal({text: hadRegister}))  
+    }
+  },[hadRegister])
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         {
-          forms[type].map(({id, ...field}: Field) => {
+          forms?.[type].map(({id, ...field}: Field) => {
             return <FormGroup key={id} control={control} {...field}  placeholder={field.label} />
           })
         }
@@ -88,7 +101,7 @@ function AuthType({type, action, from}: {type: 'register' | 'login' | 'forget' |
           <Button loading={loading}  type='submit'  variant='primary'>{type}</Button>
           <Button type='button' onClick={()=>dispatch(openModal({comp: 'auth', props:{type:orActions[type]}}))} variant='secondary'>{orActions[type]}</Button>
         </div>
-      {type === 'login' && <p className='text-sm mt-3'>Forgot your password?<Button onClick={()=>dispatch(openModal({comp: 'auth', props:{type: 'forget'}}) )} variant='link'>Reset It</Button></p>}
+      {type === 'login' && <p className='text-sm mt-3'>Forgot your password?<Button onClick={()=>dispatch(openModal({comp: 'auth', props:{type: 'forgot'}}) )} variant='link'>Reset It</Button></p>}
       </form>
 
     </>

@@ -22,7 +22,7 @@ const Addresses = ({type}:{type: 0 | 1}) => {
             <AddressType type='shipping'/>    
         </TabPanel>
         <TabPanel>
-          <AddressType type='belling'/>
+          <AddressType type='billing'/>
         </TabPanel>
       </TabPanels>
     </Tabs>

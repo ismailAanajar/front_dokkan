@@ -1,11 +1,10 @@
-import { Product as ProductType } from '@dokkan/api/types';
 import { Product } from '@dokkan/components';
 import Button from '@dokkan/components/Button';
 import ProfileLayout from '@dokkan/components/Layouts/ProfileLayout';
 import { useAppSelector } from '@dokkan/store';
 
 function index() {
-  const wishlist = useAppSelector<ProductType[]>(state => state.user.userInfo.wishlist)
+  const wishlist = useAppSelector(state => state.user.userInfo.wishlist)
   return (
     <ProfileLayout page="wishlist" >
        <ProfileLayout.header>
@@ -14,7 +13,7 @@ function index() {
       </ProfileLayout.header>
        <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-5'>
           {
-            wishlist.map(item => <Product key={item.id} {...item} wishlist/>)
+            wishlist.map((item:any) => <Product key={item.id} {...item.product} isWishlist/>)
           }
         </div>
     </ProfileLayout>

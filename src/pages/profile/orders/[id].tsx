@@ -11,7 +11,10 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@dokkan/store';
-import { subString } from '@dokkan/utils';
+import {
+  dateFormat,
+  subString,
+} from '@dokkan/utils';
 import withAuth from '@dokkan/utils/withAuth';
 
 const getStep = (status: 'pending' | 'processing' | 'failed' | 'delivered' | 'dispatched' | undefined) => {
@@ -36,6 +39,8 @@ function Order() {
         stepsItems: ["Placed", "Dispatched", "Delivered"],
         currentStep:  getStep(order?.status) 
     })
+   const address = {shipping:order?.shipping_addr, billing: order?.billing_addr}; 
+   
   return (
     <ProfileLayout page="orders" >
       <div className='flex items-center justify-between gap-3'>
@@ -80,16 +85,16 @@ function Order() {
       <div className='rounded-sm  mt-4 bg-white shadow-sm'>
         <div className='bg-gray_light p-4 flex justify-between gap-3'>
           <div><span className='text-gray'>Order id:</span> <span>#{order?.number}</span></div> 
-          <div><span className='text-gray'>placed on: </span> <span>{order?.created_at}</span></div>                               
+          <div><span className='text-gray'>placed on: </span> <span>{order?.created_at && dateFormat(order.created_at)}</span></div>                               
         </div>
         <div>
           {
             order?.products?.map(product => (
               <div key={product.id} className='flex gap-3 items-center p-3'>
-                <Image src={product.image} width={50} height={50} alt={product.title}/>
+                <Image src={product.image_url} width={50} height={50} alt={product.details.product_name}/>
                 <div className='flex-grow '>
-                  <h6>{subString(product.title, 10)}</h6>
-                  <span className='text-gray'>${product.price}x{product.quantity}</span>
+                  <h6>{subString(product.details.product_name, 25)}</h6>
+                  <span className='text-gray'>${product.details.price}x{product.details.quantity}</span>
                 </div>
                 <Button className='text-sm hover:bg-primary_light' variant='link' onClick={() => dispatch(openModal({comp:'review', props:{productId: product.id}}))}>write a review</Button>
               </div>
@@ -100,12 +105,12 @@ function Order() {
       <div className="flex flex-wrap items-start  gap-3 mt-4">
         <div className='w-full md:w-[48%]'>
           {
-            Object.keys(order?.address || {}).map(addr => (
+            Object.keys(address || {}).map(addr => (
               <div className='p-3 rounded-sm bg-white mb-3 shadow-sm'>
                 <h3 className='font-semibold'>{addr} address</h3>
                 <p>
                   {
-                    Object.values({...order?.address[addr as  'belling' | 'shipping' ], id: '', isPrimary: ''} ).map(item => item + ' ')
+                    Object.values({...address[addr as  'billing' | 'shipping' ], id: '', isPrimary: ''} ).map(item => item + ' ')
                   }
                 </p>
 

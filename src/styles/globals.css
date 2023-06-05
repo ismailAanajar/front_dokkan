@@ -6,9 +6,9 @@
 @layer base {
   :root {
     --body-bg: #f6f9fc;
-    --color-primary: #12e521;
-    --color-primary-light: #67e76f;
-    --color-secondary: #5a2e35;
+    --color-primary: #12bbe5;
+    --color-primary-light: #768fff;
+    --color-secondary: #fa854f;
     --input-bg: #efeffa;
     --input-border: #dfdfe2;
     /* ... */

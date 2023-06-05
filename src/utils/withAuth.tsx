@@ -12,16 +12,16 @@ const withAuth = (Component: any) => {
   const AuthenticatedComponent = () => {
     const dispatch = useAppDispatch()
     const {push, asPath} = useRouter()
-    const token = useAppSelector(state => state.auth.token)
+    const id = useAppSelector(state => state.user.userInfo.id)
 
     useEffect(() => {
-      if (!token) {
+      if (!id) {
         push('/')
         dispatch(openModal({comp: 'auth', props:{type: 'login', from: asPath}}))
       }
-    }, [token]);
+    }, [id]);
 
-    return !token ? <div className="min-h-screen" /> : <Component />;
+    return !id ? <div className="min-h-screen" /> : <Component />;
   };
 
   return AuthenticatedComponent;

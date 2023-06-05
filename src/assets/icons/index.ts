@@ -17,8 +17,8 @@ const iconsMap = {
   Instagram: dynamic(() => import("./instagram.svg")),
   Twitter: dynamic(() => import("./twitter.svg")),
   Youtube: dynamic(() => import("./youtube.svg")),
-  Envelope: dynamic(() => import("./envelope.svg")),
-  Lock: dynamic(() => import("./lock.svg")),
+  Email: dynamic(() => import("./envelope.svg")),
+  Password: dynamic(() => import("./lock.svg")),
   Spinner: dynamic(() => import("./spinner.svg")),
   Plus: dynamic(() => import("./plus.svg")),
   Minus: dynamic(() => import("./minus.svg")),
@@ -31,6 +31,16 @@ const iconsMap = {
   ArrowRight: dynamic(() => import("./arrow_right.svg")),
   Edit: dynamic(() => import("./edit.svg")),
   Remove: dynamic(() => import("./remove.svg")),
+  Order: dynamic(() => import("./orders.svg")),
+  Address: dynamic(() => import("./address.svg")),
+  TotalOrder: dynamic(() => import("./totalOrder.svg")),
+  PendingOrder: dynamic(() => import("./pendingOrder.svg")),
+  ProcessingOrder: dynamic(() => import("./processingOrder.svg")),
+  CompleteOrder: dynamic(() => import("./completeOrder.svg")),
+  EmptyHeart: dynamic(() => import("./empty_heart.svg")),
+  FillHeart: dynamic(() => import("./fill_heart.svg")),
+  Filter: dynamic(() => import("./filter.svg")),
+  Download: dynamic(() => import("./download.svg")),
 };
 
 export type Icon = React.ComponentType<React.SVGProps<SVGSVGElement>>;

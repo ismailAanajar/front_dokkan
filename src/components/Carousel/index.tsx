@@ -5,6 +5,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 
+import { ComponentType } from 'react';
+
 import {
   Navigation,
   Pagination,
@@ -18,10 +20,18 @@ import {
 // import required modules
 
 
+export type CarouselProps = {
+  data: {
+    ComponentName: ComponentType<any>,
+    content: any[]
+  },
+  options: any
+}
 
 
-
-const Carousel = ({data, options}:any) => {
+const Carousel = ({data, options}:CarouselProps) => {
+  if (!data) {
+    return null }
   const {ComponentName, content} = data;
   const {isScrollbar,  ...restCarouselOptions} = options;
   const child = content.map((slide:any) => {

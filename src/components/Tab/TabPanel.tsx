@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
 
-const TabPanel = (props:PropsWithChildren) => {
+const TabPanel = (props:PropsWithChildren<{className?:string}>) => {
   return ( 
-    <div className="" {...props}/>
+    <div  {...props}/>
    );
 }
  

@@ -3,12 +3,20 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-export const addAddress = createAsyncThunk('add-address', async ({type, data, action}:{type: 'shipping' | 'belling', data: any, action?: 'create' | 'update'}, {rejectWithValue}) => {
+import customAxios from './';
+import { getUser } from './userSlice';
+
+export const addAddress = createAsyncThunk('add-address', async ({type, data, action}:{type: 'shipping' | 'billing', data: any, action?: 'create' | 'update'}, {rejectWithValue}) => {
   console.log({type, data, action});
   
 })
-export const setAddressAsPrimary = createAsyncThunk('set-address-as-primary', async (id:number, {rejectWithValue}) => {
-  console.log({id});
+export const setAddressAsPrimary = createAsyncThunk('set-address-as-primary', async ({id, type}:{id:number; type: 'billing' | 'shipping'}, {rejectWithValue, dispatch}) => {
+  try {
+    await customAxios.post('address/select', {address_id:id, type})
+    dispatch(getUser())
+  } catch (error) {
+    rejectWithValue(error)
+  }
   
 })
 
